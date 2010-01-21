@@ -274,7 +274,7 @@ void DragDownload(const DownloadItem* download,
   DWORD effects;
   DoDragDrop(OSExchangeDataProviderWin::GetIDataObject(data), drag_source.get(),
              DROPEFFECT_COPY | DROPEFFECT_LINK, &effects);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   GtkWidget* root = gtk_widget_get_toplevel(view);
   if (!root)
     return;
@@ -285,12 +285,12 @@ void DragDownload(const DownloadItem* download,
   widget->DoDrag(data, DragDropTypes::DRAG_COPY | DragDropTypes::DRAG_LINK);
 #endif  // OS_WIN
 }
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
 void DragDownload(const DownloadItem* download,
                   SkBitmap* icon,
                   gfx::NativeView view) {
   NOTIMPLEMENTED();
 }
-#endif  // OS_LINUX
+#endif // USE_X11
 
 }  // namespace download_util

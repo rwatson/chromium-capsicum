@@ -205,7 +205,7 @@
             'tcmalloc/src/profiler.cc',
           ],
         }],
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'sources!': [
             'page_heap.cc',
             'port.cc',

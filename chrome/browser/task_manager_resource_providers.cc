@@ -706,7 +706,7 @@ TaskManagerBrowserProcessResource::TaskManagerBrowserProcessResource()
       default_icon_ = IconUtil::CreateSkBitmapFromHICON(icon, icon_size);
     }
   }
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   if (!default_icon_) {
     ResourceBundle& rb = ResourceBundle::GetSharedInstance();
     default_icon_ = rb.GetBitmapNamed(IDR_PRODUCT_LOGO_16);

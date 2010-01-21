@@ -103,7 +103,7 @@ extern "C" {
 //__declspec(dllexport)
 #endif
 NPError NPAPI NP_Initialize(NPNetscapeFuncs* browser_funcs
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
                             , NPPluginFuncs* plugin_funcs
 #endif
                             );
@@ -118,7 +118,7 @@ NPError NPAPI NP_GetEntryPoints(NPPluginFuncs* plugin_funcs);
 void NPAPI NP_Shutdown() {
 }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 NPError NP_GetValue(NPP instance, NPPVariable variable, void* value);
 const char* NP_GetMIMEDescription();
 #endif
@@ -127,12 +127,12 @@ const char* NP_GetMIMEDescription();
 
 // Plugin entry points
 NPError NPAPI NP_Initialize(NPNetscapeFuncs* browser_funcs
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
                             , NPPluginFuncs* plugin_funcs
 #endif
                             ) {
   browser = browser_funcs;
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   return NP_GetEntryPoints(plugin_funcs);
 #else
   return NPERR_NO_ERROR;
@@ -238,7 +238,7 @@ NPError NPP_GetValue(NPP instance, NPPVariable variable, void* value) {
   NPError err = NPERR_NO_ERROR;
 
   switch (variable) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     case NPPVpluginNameString:
       *((const char**)value) = "Pepper Test PlugIn";
       break;
@@ -270,7 +270,7 @@ NPError NPP_SetValue(NPP instance, NPNVariable variable, void* value) {
   return NPERR_GENERIC_ERROR;
 }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 NPError NP_GetValue(NPP instance, NPPVariable variable, void* value) {
   return NPP_GetValue(instance, variable, value);
 }

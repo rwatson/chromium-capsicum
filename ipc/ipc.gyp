@@ -10,7 +10,7 @@
       ['exclude', '/win_[^/]*\\.cc$'],
     ],
     'conditions': [
-      ['OS=="linux"', {'sources/': [
+      ['OS=="linux" or OS=="freebsd"', {'sources/': [
         ['include', '_posix(_unittest)?\\.cc$'],
       ]}],
       ['OS=="mac"', {'sources/': [
@@ -53,7 +53,7 @@
         'sync_socket_unittest.cc',
       ],
       'conditions': [
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             '../build/linux/system.gyp:gtk',
           ],

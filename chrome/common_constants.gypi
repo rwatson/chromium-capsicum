@@ -63,7 +63,7 @@
         '../base/base.gyp:base',
       ],
       'conditions': [
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': ['../build/linux/system.gyp:gtk'],
         }],
       ],

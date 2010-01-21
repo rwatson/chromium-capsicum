@@ -15,7 +15,7 @@
     {
       'target_name': 'libxslt',
       'conditions': [
-        ['OS=="linux" and use_system_libxslt', {
+        ['(OS=="linux" or OS=="freebsd") and use_system_libxslt', {
           'type': 'settings',
           'direct_dependent_settings': {
             'cflags': [

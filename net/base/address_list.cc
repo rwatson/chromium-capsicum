@@ -5,6 +5,10 @@
 #include "net/base/address_list.h"
 
 #include <stdlib.h>
+#if defined(OS_FREEBSD)
+#include <netinet/in.h>
+#include <sys/socket.h>
+#endif
 
 #include "base/logging.h"
 #include "net/base/sys_addrinfo.h"

@@ -266,7 +266,7 @@ void CreateApplicationShortcutView::Init() {
         l10n_util::GetString(IDS_PIN_TO_TASKBAR_CHKBOX) :
         l10n_util::GetString(IDS_CREATE_SHORTCUTS_QUICK_LAUNCH_BAR_CHKBOX),
       profile->GetPrefs()->GetBoolean(prefs::kWebAppCreateInQuickLaunchBar));
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   menu_check_box_ = AddCheckbox(
       l10n_util::GetString(IDS_CREATE_SHORTCUTS_MENU_CHKBOX),
       profile->GetPrefs()->GetBoolean(prefs::kWebAppCreateInAppsMenu));

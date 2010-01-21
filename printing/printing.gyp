@@ -64,13 +64,14 @@
         ],
       },
       'conditions': [
-        ['OS!="linux"', {'sources/': [['exclude', '_linux\\.cc$']]}],
+        ['OS!="linux" and OS!="freebsd"',
+         {'sources/': [['exclude', '_linux\\.cc$']]}],
         ['OS!="mac"', {'sources/': [['exclude', '_mac\\.(cc|mm?)$']]}],
         ['OS!="win"', {'sources/': [['exclude', '_win\\.cc$']]
           }, {  # else: OS=="win"
             'sources/': [['exclude', '_posix\\.cc$']]
         }],
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             # For FT_Init_FreeType and friends.
             '../build/linux/system.gyp:freetype2',
@@ -107,7 +108,7 @@
             'sources/': [['exclude', '_posix_unittest\\.cc$']]
           }
         ],
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
             'dependencies': [
               '../build/linux/system.gyp:gtk',
            ],

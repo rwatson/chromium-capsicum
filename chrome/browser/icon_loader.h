@@ -73,8 +73,8 @@ class IconLoader : public base::RefCountedThreadSafe<IconLoader> {
 
   Delegate* delegate_;
 
-#if defined(OS_LINUX)
-  // On Linux we use gdk's pixbuf loader, which has to execute on the UI
+#if defined(USE_X11)
+  // On X11 systems we use gdk's pixbuf loader, which has to execute on the UI
   // thread, so we only read the file on the background thread and parse it
   // on the main thread.
   void ParseIcon();

@@ -29,7 +29,7 @@
 
 #if defined(OS_WIN)
 #include "views/widget/widget_win.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "views/widget/widget_gtk.h"
 #endif
 
@@ -132,7 +132,7 @@ void BlockedPopupContainerViewWidget::OnSize(UINT param, const CSize& size) {
   LayoutRootView();
 }
 
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 
 // BlockedPopupContainerViewWidget GTK ----------------------------------------
 class BlockedPopupContainerViewWidget : public views::WidgetGtk {

@@ -6,7 +6,7 @@
 
 #include "chrome/browser/profile.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "chrome/browser/gtk/gtk_theme_provider.h"
 #include "chrome/common/gtk_util.h"
 #endif
@@ -14,7 +14,7 @@
 namespace renderer_preferences_util {
 
 void UpdateFromSystemSettings(RendererPreferences* prefs, Profile* profile) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   gtk_util::UpdateGtkFontSettings(prefs);
 
 #if !defined(TOOLKIT_VIEWS)
@@ -25,7 +25,7 @@ void UpdateFromSystemSettings(RendererPreferences* prefs, Profile* profile) {
   prefs->thumb_inactive_color = provider->get_thumb_inactive_color();
   prefs->track_color = provider->get_track_color();
 #endif  // !defined(TOOLKIT_VIEWS)
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_NIX)
 }
 
 }  // renderer_preferences_util

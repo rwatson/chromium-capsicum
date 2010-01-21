@@ -7,7 +7,7 @@
 
 #include "build/build_config.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <gtk/gtkstyle.h>
 #endif
 
@@ -28,7 +28,7 @@ class Insets {
         left_(left),
         bottom_(bottom),
         right_(right) {}
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   explicit Insets(const GtkBorder& border)
       : top_(border.top),
         left_(border.left),

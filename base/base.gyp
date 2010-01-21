@@ -219,6 +219,13 @@
         'test/test_file_util_posix.cc',
         'test/test_file_util_win.cc',
       ],
+      'conditions': [
+        [ 'OS == "freebsd"', {
+            # fdatasync is not implemented on FreeBSD
+            'sources/': [ ['exclude', '^test/test_file_util_linux.cc$'] ],
+          },
+        ],
+      ],
     },
     {
       'target_name': 'test_support_perf',

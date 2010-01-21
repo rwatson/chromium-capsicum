@@ -176,8 +176,8 @@ bool DebugUtil::BeingDebugged() {
 
 bool DebugUtil::BeingDebugged() {
   // TODO(benl): can we determine this under FreeBSD?
-  NOTIMPLEMENTED();
-  return false;
+  LOG(WARNING) << "Don't know how to do this";
+  return true;
 }
 
 #endif

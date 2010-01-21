@@ -195,7 +195,8 @@ class CreateDesktopShortcutTask : public Task {
     FilePath desktop_path;
     if (!PathService::Get(chrome::DIR_USER_DESKTOP, &desktop_path))
       return;
-
+#if !defined(OS_FREEBSD)
+// BSD: Linux-specific calls like openat are used so defined out for BSD.
     int desktop_fd = open(desktop_path.value().c_str(), O_RDONLY | O_DIRECTORY);
     if (desktop_fd < 0)
       return;
@@ -221,6 +222,7 @@ class CreateDesktopShortcutTask : public Task {
     }
 
     HANDLE_EINTR(close(desktop_fd));
+#endif  // !defined(OS_FREEBSD)
   }
 
   void CreateInApplicationsMenu(const FilePath& shortcut_filename,

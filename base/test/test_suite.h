@@ -58,7 +58,7 @@ class TestSuite {
 #if defined(OS_POSIX) && !defined(OS_MACOSX)
     g_thread_init(NULL);
     gtk_init_check(&argc, &argv);
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_POSIX) && !defined(OS_MACOSX)
     // Don't add additional code to this constructor.  Instead add it to
     // Initialize().  See bug 6436.
   }

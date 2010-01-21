@@ -6,7 +6,7 @@
 
 #include <algorithm>
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <gtk/gtk.h>
 #endif
 
@@ -555,7 +555,7 @@ bool WebPluginDelegateProxy::CreateBitmap(
   int height = plugin_rect_.height();
   const size_t stride = skia::PlatformCanvas::StrideForWidth(width);
   const size_t size = stride * height;
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   memory->reset(TransportDIB::Create(size, 0));
   if (!memory->get())
     return false;

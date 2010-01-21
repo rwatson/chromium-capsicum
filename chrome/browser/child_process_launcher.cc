@@ -16,7 +16,7 @@
 
 #if defined(OS_WIN)
 #include "chrome/browser/sandbox_policy.h"
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 #include "base/singleton.h"
 #include "chrome/browser/crash_handler_host_linux.h"
 #include "chrome/browser/zygote_host_linux.h"
@@ -35,7 +35,7 @@ class ChildProcessLauncher::Context
  public:
   Context()
       : starting_(true)
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
         , zygote_(false)
 #endif
         {
@@ -97,7 +97,7 @@ class ChildProcessLauncher::Context
     handle = sandbox::StartProcessWithAccess(cmd_line, exposed_dir);
 #elif defined(OS_POSIX)
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     bool zygote = false;
     // On Linux, normally spawn renderer processes with zygotes. We can't do
     // this when we're spawning child processes through an external program
@@ -133,7 +133,7 @@ class ChildProcessLauncher::Context
           ipcfd,
           kPrimaryIPCChannel + base::GlobalDescriptors::kBaseDescriptor));
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       // On Linux, we need to add some extra file descriptors for crash handling
       // and the sandbox.
       if (is_renderer || is_plugin) {
@@ -158,7 +158,7 @@ class ChildProcessLauncher::Context
             sandbox_fd,
             kSandboxIPCChannel + base::GlobalDescriptors::kBaseDescriptor));
       }
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_NIX)
 
       // Actually launch the app.
       if (!base::LaunchApp(cmd_line->argv(), env, fds_to_map, false, &handle))
@@ -171,20 +171,20 @@ class ChildProcessLauncher::Context
         NewRunnableMethod(
             this,
             &ChildProcessLauncher::Context::Notify,
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
             zygote,
 #endif
             handle));
   }
 
   void Notify(
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       bool zygote,
 #endif
       base::ProcessHandle handle) {
     starting_ = false;
     process_.set_handle(handle);
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     zygote_ = zygote;
 #endif
     if (client_) {
@@ -204,7 +204,7 @@ class ChildProcessLauncher::Context
         ChromeThread::PROCESS_LAUNCHER, FROM_HERE,
         NewRunnableFunction(
             &ChildProcessLauncher::Context::TerminateInternal,
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
             zygote_,
 #endif
             process_.handle()));
@@ -212,7 +212,7 @@ class ChildProcessLauncher::Context
   }
 
   static void TerminateInternal(
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       bool zygote,
 #endif
       base::ProcessHandle handle) {
@@ -222,13 +222,13 @@ class ChildProcessLauncher::Context
     process.Terminate(ResultCodes::NORMAL_EXIT);
     // On POSIX, we must additionally reap the child.
 #if defined(OS_POSIX)
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     if (zygote) {
       // If the renderer was created via a zygote, we have to proxy the reaping
       // through the zygote process.
       Singleton<ZygoteHost>()->EnsureProcessTerminated(handle);
     } else
-#endif  // OS_LINUX
+#endif  // defined(OS_NIX)
     {
       ProcessWatcher::EnsureProcessTerminated(handle);
     }
@@ -241,7 +241,7 @@ class ChildProcessLauncher::Context
   base::Process process_;
   bool starting_;
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   bool zygote_;
 #endif
 };
@@ -284,7 +284,7 @@ base::ProcessHandle ChildProcessLauncher::GetHandle() {
 bool ChildProcessLauncher::DidProcessCrash() {
   bool did_crash, child_exited;
   base::ProcessHandle handle = context_->process_.handle();
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   if (context_->zygote_) {
     did_crash = Singleton<ZygoteHost>()->DidProcessCrash(handle, &child_exited);
   } else

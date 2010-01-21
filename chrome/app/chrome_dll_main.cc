@@ -23,7 +23,7 @@
 #include <unistd.h>
 #endif
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <gdk/gdk.h>
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -57,7 +57,7 @@
 #include "chrome/common/sandbox_init_wrapper.h"
 #include "ipc/ipc_switches.h"
 
-#if defined(OS_LINUX)
+#if defined(USE_NSS)
 #include "base/nss_init.h"
 #include "chrome/browser/renderer_host/render_sandbox_host_linux.h"
 #include "chrome/browser/zygote_host_linux.h"
@@ -190,7 +190,7 @@ bool HasDeprecatedArguments(const std::wstring& command_line) {
 
 #endif  // OS_WIN
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 static void GLibLogHandler(const gchar* log_domain,
                            GLogLevelFlags log_level,
                            const gchar* message,
@@ -246,6 +246,7 @@ static void SetUpGLibLogHandler() {
   }
 }
 
+#if defined(OS_LINUX)
 static void AdjustLinuxOOMScore(const std::string& process_type) {
   const int kMiscScore = 7;
   const int kPluginScore = 10;
@@ -276,7 +277,8 @@ static void AdjustLinuxOOMScore(const std::string& process_type) {
   if (score > -1)
     base::AdjustOOMScore(base::GetCurrentProcId(), score);
 }
-#endif  // defined(OS_LINUX)
+#endif
+#endif  // defined(OS_NIX)
 
 // Register the invalid param handler and pure call handler to be able to
 // notify breakpad when it happens.
@@ -347,7 +349,7 @@ bool SubprocessNeedsResourceBundle(const std::string& process_type) {
       // Windows needs resources for the default/null plugin.
       process_type == switches::kPluginProcess ||
 #endif
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       // The zygote process opens the resources for the renderers.
       process_type == switches::kZygoteProcess ||
 #endif
@@ -446,7 +448,7 @@ int ChromeMain(int argc, char** argv) {
     return 1;
 #endif
 
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#if defined(OS_NIX) && !defined(OS_CHROMEOS)
   // Show the man page on --help or -h.
   if (parsed_command_line.HasSwitch("help") ||
       parsed_command_line.HasSwitch("h")) {
@@ -686,7 +688,7 @@ int ChromeMain(int argc, char** argv) {
     rv = NaClMain(main_params);
 #endif
   } else if (process_type == switches::kZygoteProcess) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     if (ZygoteMain(main_params)) {
       // Zygote::HandleForkRequest may have reallocated the command
       // line so update it here with the new version.
@@ -702,7 +704,7 @@ int ChromeMain(int argc, char** argv) {
     NOTIMPLEMENTED();
 #endif
   } else if (process_type.empty()) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     const char* sandbox_binary = NULL;
     struct stat st;
 
@@ -740,7 +742,7 @@ int ChromeMain(int argc, char** argv) {
     // gtk_init() can change |argc| and |argv|.
     gtk_init(&argc, &argv);
     SetUpGLibLogHandler();
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_NIX)
 
     rv = BrowserMain(main_params);
   } else {

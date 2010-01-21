@@ -4,7 +4,7 @@
 
 #include "chrome/browser/search_engines/template_url_prepopulate_data.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include <locale.h>
 #endif
 
@@ -2321,7 +2321,7 @@ int GetCurrentCountryID() {
                                            static_cast<char>(isobuf[1]));
 }
 
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 
 int GetCurrentCountryID() {
   const char* locale = setlocale(LC_MESSAGES, NULL);

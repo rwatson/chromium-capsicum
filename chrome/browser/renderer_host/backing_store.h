@@ -16,7 +16,7 @@
 #elif defined(OS_MACOSX)
 #include "base/scoped_cftyperef.h"
 #include "skia/ext/platform_canvas.h"
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
 #include "chrome/common/x11_util.h"
 #endif
 
@@ -32,7 +32,7 @@ class BackingStore {
  public:
 #if defined(OS_WIN) || defined(OS_MACOSX)
   BackingStore(RenderWidgetHost* widget, const gfx::Size& size);
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
   // Create a backing store on the X server. The visual is an Xlib Visual
   // describing the format of the target window and the depth is the color
   // depth of the X window which will be drawn into.
@@ -70,7 +70,7 @@ class BackingStore {
   // Paint the layer into a graphics context--if the target is a window,
   // this should be a GPU->GPU copy (and therefore very fast).
   void PaintToRect(const gfx::Rect& dest_rect, CGContextRef target);
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
   Display* display() const { return display_; }
   XID root_window() const { return root_window_; }
 
@@ -136,7 +136,7 @@ class BackingStore {
 #elif defined(OS_MACOSX)
   scoped_cftyperef<CGContextRef> cg_bitmap_;
   scoped_cftyperef<CGLayerRef> cg_layer_;
-#elif defined(OS_LINUX) && defined(USE_GL)
+#elif defined(OS_NIX) && defined(USE_GL)
   Display* const display_;
 
   // The parent window for this backing store.
@@ -150,7 +150,7 @@ class BackingStore {
   // bitmap.
   gfx::Size texture_size_;
 
-#elif defined(OS_LINUX) && !defined(USE_GL)
+#elif defined(OS_NIX) && !defined(USE_GL)
   // Paints the bitmap from the renderer onto the backing store without
   // using Xrender to composite the pixmaps.
   void PaintRectWithoutXrender(TransportDIB* bitmap,

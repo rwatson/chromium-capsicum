@@ -79,7 +79,7 @@
         '<!@(<(pkg-config) --cflags nss)',
       ],
       'conditions': [
-        [ 'OS == "linux"', {
+        [ 'OS == "linux" or OS == "freebsd"', {
           'sources!': [
             'ssl/os2_err.c',
             'ssl/os2_err.h',

@@ -10,7 +10,7 @@
 #include "googleurl/src/gurl.h"
 #include "webkit/glue/webpreferences.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "chrome/common/gtk_util.h"
 #endif
 

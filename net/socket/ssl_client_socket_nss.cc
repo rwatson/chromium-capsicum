@@ -251,13 +251,30 @@ int SSLClientSocketNSS::InitializeSSLOptions() {
 
   // Tell NSS who we're connected to
   PRNetAddr peername;
+#if defined(OS_FREEBSD)
+//BSD peername is implicitly cast back to a PRNetAddr when GetPeerName returns
+//BSD but it doesn't work on BSD cuz sockaddr is defined differently than on
+//BSD linux.  As a result, I hand unroll the data structure below.  Perhaps
+//BSD someone better versed in casting magic can clean this up and do it in
+//BSD in a single cast, as on linux.
+  sockaddr socketinfo;
+  socklen_t len = sizeof(socketinfo);
+  int err = transport_->GetPeerName(&socketinfo, &len);
+#else
   socklen_t len = sizeof(PRNetAddr);
   int err = transport_->GetPeerName((struct sockaddr *)&peername, &len);
+#endif
   if (err) {
     DLOG(ERROR) << "GetPeerName failed";
     // TODO(wtc): Change GetPeerName to return a network error code.
     return ERR_UNEXPECTED;
   }
+#if defined(OS_FREEBSD)
+  sockaddr_in* sockaccess = (struct sockaddr_in *) &socketinfo;
+  peername.inet.family = sockaccess->sin_family;
+  peername.inet.ip     = sockaccess->sin_addr.s_addr;
+  peername.inet.port   = sockaccess->sin_port;
+#endif
   memio_SetPeerName(nss_fd_, &peername);
 
   // Grab pointer to buffers

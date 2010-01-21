@@ -47,10 +47,10 @@ ExtensionProcessManager::ExtensionProcessManager(Profile* profile)
                  NotificationService::AllSources());
   registrar_.Add(this, NotificationType::RENDERER_PROCESS_CLOSED,
                  NotificationService::AllSources());
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if !defined(OS_MACOSX)
   registrar_.Add(this, NotificationType::BROWSER_CLOSED,
                  NotificationService::AllSources());
-#elif defined(OS_MACOSX)
+#else
   registrar_.Add(this, NotificationType::APP_TERMINATING,
                  NotificationService::AllSources());
 #endif
@@ -241,7 +241,7 @@ void ExtensionProcessManager::Observe(NotificationType type,
       UnregisterExtensionProcess(host->id());
       break;
     }
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if !defined(OS_MACOSX)
     case NotificationType::BROWSER_CLOSED: {
       // Close background hosts when the last browser is closed so that they
       // have time to shutdown various objects on different threads. Our
@@ -251,7 +251,7 @@ void ExtensionProcessManager::Observe(NotificationType type,
         CloseBackgroundHosts();
       break;
     }
-#elif defined(OS_MACOSX)
+#else
     case NotificationType::APP_TERMINATING: {
       // Don't follow the behavior of having the last browser window closed
       // being an indication that the app should close.

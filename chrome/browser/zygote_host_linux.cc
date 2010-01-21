@@ -70,7 +70,12 @@ void ZygoteHost::Init(const std::string& sandbox_cmd) {
                                  switches::kZygoteProcess);
 
   int fds[2];
+#if defined(OS_FREEBSD)
+  if (socketpair(PF_UNIX, SOCK_SEQPACKET, 0, fds) != 0)
+    CHECK(socketpair(PF_UNIX, SOCK_DGRAM, 0, fds) == 0);
+#else
   CHECK(socketpair(PF_UNIX, SOCK_SEQPACKET, 0, fds) == 0);
+#endif
   base::file_handle_mapping_vector fds_to_map;
   fds_to_map.push_back(std::make_pair(fds[1], 3));
 
@@ -209,6 +214,7 @@ pid_t ZygoteHost::ForkRenderer(
     return base::kNullProcessHandle;
 
   const int kRendererScore = 5;
+#if defined(OS_LINUX)
   if (using_suid_sandbox_) {
     base::ProcessHandle sandbox_helper_process;
     base::file_handle_mapping_vector dummy_map;
@@ -226,6 +232,7 @@ pid_t ZygoteHost::ForkRenderer(
   } else {
     base::AdjustOOMScore(pid, kRendererScore);
   }
+#endif  // defined(OS_LINUX)
 
   return pid;
 }

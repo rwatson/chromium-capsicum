@@ -56,7 +56,7 @@ class SOCKS5ClientSocket : public ClientSocket {
   virtual bool SetReceiveBufferSize(int32 size);
   virtual bool SetSendBufferSize(int32 size);
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   virtual int GetPeerName(struct sockaddr* name, socklen_t* namelen);
 #endif
 

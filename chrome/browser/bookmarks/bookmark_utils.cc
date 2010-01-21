@@ -353,7 +353,7 @@ void OpenAll(gfx::NativeWindow parent,
 void CopyToClipboard(BookmarkModel* model,
                      const std::vector<const BookmarkNode*>& nodes,
                      bool remove_nodes) {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   if (nodes.empty())
     return;
 
@@ -373,7 +373,7 @@ void CopyToClipboard(BookmarkModel* model,
 void PasteFromClipboard(BookmarkModel* model,
                         const BookmarkNode* parent,
                         int index) {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   if (!parent)
     return;
 

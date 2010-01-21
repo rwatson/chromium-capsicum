@@ -33,7 +33,7 @@ class UrlFetchTest : public UITest {
       dir = dir.AppendASCII("reference_build");
 #if defined(OS_WIN)
       dir = dir.AppendASCII("chrome");
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
       dir = dir.AppendASCII("chrome_linux");
 #elif defined(OS_MACOSX)
       dir = dir.AppendASCII("chrome_mac");

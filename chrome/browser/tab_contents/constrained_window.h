@@ -14,7 +14,7 @@ namespace views {
 class WindowDelegate;
 }
 typedef views::WindowDelegate ConstrainedWindowDelegate;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 class ConstrainedWindowGtkDelegate;
 typedef ConstrainedWindowGtkDelegate ConstrainedWindowDelegate;
 #elif defined(OS_MACOSX)

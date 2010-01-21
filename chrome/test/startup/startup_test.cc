@@ -205,7 +205,7 @@ TEST_F(StartupTest, PerfColdComplexTheme) {
                  false /* not important */, UITest::COMPLEX_THEME);
 }
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 TEST_F(StartupTest, PerfColdGtkTheme) {
   RunStartupTest("warm", "gtk-theme", false /* warm */,
                  false /* not important */, UITest::NATIVE_THEME);

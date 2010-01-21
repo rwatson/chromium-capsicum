@@ -52,7 +52,7 @@
 * ***** END LICENSE BLOCK ***** */
 
 // static
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 // http://www.google.com/codesearch/p?hl=en#e_ObwTAVPyo/profile/dirserviceprovider/src/nsProfileLock.cpp&l=433
 const FilePath::CharType* FirefoxProfileLock::kLockFileName =
     FILE_PATH_LITERAL(".parentlock");

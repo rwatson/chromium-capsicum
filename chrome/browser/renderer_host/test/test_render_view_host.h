@@ -84,7 +84,7 @@ class TestRenderWidgetHostView : public RenderWidgetHostView {
   virtual void SetActive(bool active);
 #endif
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   virtual void CreatePluginContainer(gfx::PluginWindowHandle id) { }
   virtual void DestroyPluginContainer(gfx::PluginWindowHandle id) { }
 #endif

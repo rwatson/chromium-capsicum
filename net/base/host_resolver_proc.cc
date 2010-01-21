@@ -3,20 +3,15 @@
 // found in the LICENSE file.
 
 #include "net/base/host_resolver_proc.h"
-
 #include "build/build_config.h"
-
-#if defined(OS_LINUX)
-#include <resolv.h>
-#endif
-
 #include "base/logging.h"
 #include "base/time.h"
 #include "net/base/address_list.h"
 #include "net/base/net_errors.h"
 #include "net/base/sys_addrinfo.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
+#include <resolv.h>
 #include "base/singleton.h"
 #include "base/thread_local_storage.h"
 #endif
@@ -77,7 +72,8 @@ int HostResolverProc::ResolveUsingPrevious(const std::string& host,
   return SystemHostResolverProc(host, address_family, addrlist);
 }
 
-#if defined(OS_LINUX)
+//BSD Is this necessary on BSD?
+#if defined(OS_NIX)
 // On Linux changes to /etc/resolv.conf can go unnoticed thus resulting in
 // DNS queries failing either because nameservers are unknown on startup
 // or because nameserver info has changed as a result of e.g. connecting to
@@ -145,7 +141,7 @@ class DnsReloadTimer {
 // static
 ThreadLocalStorage::Slot DnsReloadTimer::tls_index_(base::LINKER_INITIALIZED);
 
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_NIX)
 
 int SystemHostResolverProc(const std::string& host,
                            AddressFamily address_family,
@@ -204,7 +200,7 @@ int SystemHostResolverProc(const std::string& host,
   hints.ai_socktype = SOCK_STREAM;
 
   int err = getaddrinfo(host.c_str(), NULL, &hints, &ai);
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   net::DnsReloadTimer* dns_timer = Singleton<net::DnsReloadTimer>::get();
   // If we fail, re-initialise the resolver just in case there have been any
   // changes to /etc/resolv.conf and retry. See http://crbug.com/11380 for info.

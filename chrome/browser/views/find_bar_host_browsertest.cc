@@ -652,7 +652,7 @@ IN_PROC_BROWSER_TEST_F(FindInPageControllerTest,
 }
 
 // Make sure Find box grabs the Esc accelerator and restores it again.
-#if defined(OS_LINUX)
+#if defined(USE_X11)
 // TODO(oshima): On Gtk/Linux, a focus out event is asynchronous and
 // hiding a find bar does not immediately update the target
 // accelerator. The last condition fails in most cases due to this
@@ -675,7 +675,7 @@ IN_PROC_BROWSER_TEST_F(FindInPageControllerTest,
   // GetNativeView / GetNativewWindow methods on BrowserWindow.
   // See http://crbug.com/26873.
   gfx::NativeView browser_view = browser()->window()->GetNativeHandle();
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   gfx::NativeView browser_view =
       GTK_WIDGET(browser()->window()->GetNativeHandle());
 #else

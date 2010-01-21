@@ -16,7 +16,7 @@
 #include "chrome/browser/tab_contents/render_view_host_delegate_helper.h"
 #if defined(TOOLKIT_VIEWS)
 #include "chrome/browser/views/extensions/extension_view.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "chrome/browser/gtk/extension_view_gtk.h"
 #elif defined(OS_MACOSX)
 #include "chrome/browser/cocoa/extension_view_mac.h"
@@ -56,7 +56,7 @@ class ExtensionHost : public ExtensionPopupHost::PopupDelegate,
 #if defined(TOOLKIT_VIEWS)
   void set_view(ExtensionView* view) { view_.reset(view); }
   ExtensionView* view() const { return view_.get(); }
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   ExtensionViewGtk* view() const { return view_.get(); }
 #elif defined(OS_MACOSX)
   ExtensionViewMac* view() const { return view_.get(); }
@@ -210,7 +210,7 @@ class ExtensionHost : public ExtensionPopupHost::PopupDelegate,
   // Optional view that shows the rendered content in the UI.
 #if defined(TOOLKIT_VIEWS)
   scoped_ptr<ExtensionView> view_;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   scoped_ptr<ExtensionViewGtk> view_;
 #elif defined(OS_MACOSX)
   scoped_ptr<ExtensionViewMac> view_;

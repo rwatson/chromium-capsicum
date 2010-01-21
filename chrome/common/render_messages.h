@@ -2143,7 +2143,7 @@ struct ParamTraits<Clipboard::Buffer> {
       case Clipboard::BUFFER_STANDARD:
         type = L"BUFFER_STANDARD";
         break;
-#if defined(OS_LINUX)
+#if defined(USE_X11)
       case Clipboard::BUFFER_SELECTION:
         type = L"BUFFER_SELECTION";
         break;

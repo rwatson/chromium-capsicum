@@ -42,14 +42,16 @@
 #define TOOLKIT_USES_GTK 1
 #endif
 
+// To support all the common *nix features out there, use OS_NIX
 #if defined(OS_LINUX) || defined(OS_FREEBSD) || defined(OS_OPENBSD)
+#define OS_NIX 1
 #define USE_NSS 1  // Use NSS for crypto.
 #define USE_X11 1  // Use X for graphics.
 #endif
 
 // For access to standard POSIXish features, use OS_POSIX instead of a
 // more specific macro.
-#if defined(OS_MACOSX) || defined(OS_LINUX) || defined(OS_FREEBSD) || defined(OS_OPENBSD)
+#if defined(OS_MACOSX) || defined(OS_NIX)
 #define OS_POSIX 1
 // Use base::DataPack for name/value pairs.
 #define USE_BASE_DATA_PACK 1

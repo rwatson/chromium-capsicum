@@ -21,4 +21,7 @@
 #elif defined(OS_POSIX)
 #include <netdb.h>
 #endif
+#if defined(OS_FREEBSD)
+#include <netinet/in.h>
+#endif
 

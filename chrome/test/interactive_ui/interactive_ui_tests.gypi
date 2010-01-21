@@ -48,7 +48,7 @@
     '<(DEPTH)/chrome/test/unit/chrome_test_suite.h',
   ],
   'conditions': [
-    ['OS=="linux"', {
+    ['OS=="linux" or OS=="freebsd"', {
       'dependencies': [
         '<(DEPTH)/build/linux/system.gyp:gtk',
         '<(DEPTH)/tools/xdisplaycheck/xdisplaycheck.gyp:xdisplaycheck',
@@ -62,7 +62,7 @@
         '<(DEPTH)/chrome/test/interactive_ui/view_event_test_base.cc',
         '<(DEPTH)/chrome/test/interactive_ui/view_event_test_base.h',
       ],
-    }],  # OS=="linux"
+    }],  # OS=="linux or OS=="freebsd""
     ['target_arch!="x64" and target_arch!="arm"', {
       'dependencies': [
         # run time dependency

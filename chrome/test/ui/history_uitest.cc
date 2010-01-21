@@ -93,7 +93,7 @@ TEST_F(HistoryTester, DISABLED_VerifyHistoryLength) {
                 kTestCompleteSuccess, action_max_timeout_ms());
 }
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
 TEST_F(HistoryTester, DISABLED_ConsiderRedirectAfterGestureAsUserInitiated) {
   // Test the history length for the following page transition.
   //
@@ -123,7 +123,7 @@ TEST_F(HistoryTester, DISABLED_ConsiderRedirectAfterGestureAsUserInitiated) {
   WaitForFinish("History_Length_Test_12", "1", url, kTestCompleteCookie,
                 kTestCompleteSuccess, action_max_timeout_ms());
 }
-#endif  // defined(OS_WIN) || defined(OS_LINUX)
+#endif  // defined(OS_WIN) || defined(OS_NIX)
 
 TEST_F(HistoryTester, DISABLED_ConsiderSlowRedirectAsUserInitiated) {
   // Test the history length for the following page transition.

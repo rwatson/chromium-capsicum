@@ -4,6 +4,15 @@
 
 {
   'conditions': [
+    [ 'OS=="freebsd"', {
+      # GYP requires that each file have at least one target defined.
+      'targets': [
+        {
+          'target_name': 'sandbox',
+          'type': 'settings',
+        },
+      ],
+    }],
     [ 'OS=="linux" and selinux==0', {
       'targets': [
         {

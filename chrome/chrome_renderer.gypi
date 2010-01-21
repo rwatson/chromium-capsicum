@@ -148,16 +148,20 @@
         ],
       },
       'conditions': [
-        ['disable_nacl!=1', {
+        ['disable_nacl!=1 and OS!="freebsd"', {
           'dependencies': [
             'nacl',
           ],
         }],
         # Linux-specific rules.
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             '../build/linux/system.gyp:gtk',
-            '../sandbox/sandbox.gyp:sandbox',
+          ],
+          'conditions': [
+            ['OS=="linux"', {
+              'dependencies': [ '../sandbox/sandbox.gyp:sandbox',],
+           }],
           ],
         }],
         # Windows-specific rules.

@@ -16,7 +16,7 @@
 namespace views {
 #if defined(OS_WIN)
 class WidgetWin;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 class WidgetGtk;
 #endif
 }
@@ -105,7 +105,7 @@ class DraggedTabView : public views::View,
   // The window that contains the DraggedTabView.
 #if defined(OS_WIN)
   scoped_ptr<views::WidgetWin> container_;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   scoped_ptr<views::WidgetGtk> container_;
 #endif
 

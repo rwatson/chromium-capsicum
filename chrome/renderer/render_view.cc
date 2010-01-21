@@ -1466,7 +1466,7 @@ void RenderView::setInputMethodEnabled(bool enabled) {
 }
 
 void RenderView::didChangeSelection(bool is_empty_selection) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   if (!handling_input_event_)
       return;
   // TODO(estade): investigate incremental updates to the selection so that we
@@ -2695,14 +2695,14 @@ webkit_glue::WebPluginDelegate* RenderView::CreatePluginDelegate(
 }
 
 void RenderView::CreatedPluginWindow(gfx::PluginWindowHandle window) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   RenderThread::current()->Send(new ViewHostMsg_CreatePluginContainer(
       routing_id(), window));
 #endif
 }
 
 void RenderView::WillDestroyPluginWindow(gfx::PluginWindowHandle window) {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   RenderThread::current()->Send(new ViewHostMsg_DestroyPluginContainer(
       routing_id(), window));
 #endif
@@ -3239,7 +3239,7 @@ void RenderView::OnEnablePreferredSizeChangedMode() {
 void RenderView::OnSetRendererPrefs(const RendererPreferences& renderer_prefs) {
   renderer_preferences_ = renderer_prefs;
   UpdateFontRenderingFromRendererPrefs();
-#if defined(OS_LINUX) && !defined(TOOLKIT_VIEWS)
+#if defined(OS_NIX) && !defined(TOOLKIT_VIEWS)
   WebColorName name = WebKit::WebColorWebkitFocusRingColor;
   WebKit::setNamedColors(&name, &renderer_prefs.focus_ring_color, 1);
 

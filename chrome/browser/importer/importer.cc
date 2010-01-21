@@ -30,7 +30,7 @@
 #include "app/win_util.h"
 #include "chrome/browser/views/importer_lock_view.h"
 #include "views/window/window.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "chrome/browser/gtk/import_lock_dialog_gtk.h"
 #elif defined(OS_MACOSX)
 #include "chrome/browser/cocoa/importer_lock_dialog.h"
@@ -447,7 +447,7 @@ void ImporterHost::ShowWarningDialog() {
 #if defined(OS_WIN)
     views::Window::CreateChromeWindow(GetActiveWindow(), gfx::Rect(),
                                       new ImporterLockView(this))->Show();
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
     ImportLockDialogGtk::Show(parent_window_, this);
 #else
     ImportLockDialogCocoa::ShowWarning(this);

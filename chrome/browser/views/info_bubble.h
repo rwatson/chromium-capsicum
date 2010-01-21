@@ -9,7 +9,7 @@
 
 #if defined(OS_WIN)
 #include "views/widget/widget_win.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "views/widget/widget_gtk.h"
 #endif
 
@@ -88,7 +88,7 @@ class InfoBubbleDelegate {
 class InfoBubble
 #if defined(OS_WIN)
     : public views::WidgetWin,
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
     : public views::WidgetGtk,
 #endif
       public views::AcceleratorTarget {
@@ -128,7 +128,7 @@ class InfoBubble
 #if defined(OS_WIN)
   // Overridden from WidgetWin:
   virtual void OnActivate(UINT action, BOOL minimized, HWND window);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   // Overridden from WidgetGtk:
   virtual void IsActiveChanged();
 #endif

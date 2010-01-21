@@ -76,7 +76,7 @@ void WebPluginProxy::WillDestroyWindow(gfx::PluginWindowHandle window) {
   PluginThread::current()->Send(
       new PluginProcessHostMsg_PluginWindowDestroyed(
           window, ::GetParent(window)));
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   // Nothing to do.
 #else
   NOTIMPLEMENTED();
@@ -365,7 +365,7 @@ bool WebPluginProxy::SetDropEffect(struct NPObject* event, int effect) {
 }
 
 void WebPluginProxy::Paint(const gfx::Rect& rect) {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   if (!windowless_canvas_.get())
     return;
 #elif defined(OS_MACOSX)
@@ -377,7 +377,7 @@ void WebPluginProxy::Paint(const gfx::Rect& rect) {
   // end up with the old values.
   gfx::Rect offset_rect = rect;
   offset_rect.Offset(delegate_->GetRect().origin());
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   windowless_canvas_->save();
 
   // The given clip rect is relative to the plugin coordinate system.
@@ -542,7 +542,7 @@ void WebPluginProxy::SetWindowlessBuffer(
       windowless_context_);
 }
 
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 
 void WebPluginProxy::SetWindowlessBuffer(
     const TransportDIB::Handle& windowless_buffer,

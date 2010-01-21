@@ -4,7 +4,7 @@
 
 #include "app/gfx/blit.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <cairo/cairo.h>
 #endif
 
@@ -45,7 +45,7 @@ void BlitContextToContext(NativeDrawingContext dst_context,
   scoped_cftyperef<CGImageRef> src_sub_image(
       CGImageCreateWithImageInRect(src_image, src_rect.ToCGRect()));
   CGContextDrawImage(dst_context, dst_rect.ToCGRect(), src_sub_image);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   // Only translations in the source context are supported; more complex
   // source context transforms will be ignored.
   cairo_save(dst_context);
@@ -69,7 +69,7 @@ static NativeDrawingContext GetContextFromCanvas(
   return device.getBitmapDC();
 #elif defined(OS_MACOSX)
   return device.GetBitmapContext();
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   return device.beginPlatformPaint();
 #endif
 }

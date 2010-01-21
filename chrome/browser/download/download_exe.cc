@@ -145,7 +145,7 @@ static const char* const g_executables[] = {
   "xml",
   "xsl",
   "xslt",
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   // TODO(estade): lengthen this list.
   "exe",
   "pl",

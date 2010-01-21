@@ -19,7 +19,7 @@ class TabStripModel;
 
 namespace views {
 class ImageView;
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 class WidgetGtk;
 #elif defined(OS_WIN)
 class WidgetWin;

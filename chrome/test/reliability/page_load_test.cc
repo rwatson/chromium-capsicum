@@ -159,7 +159,7 @@ class PageLoadTest : public UITest {
     scoped_ptr<FileVersionInfo> file_info;
 #if defined(OS_WIN)
     file_info.reset(FileVersionInfo::CreateFileVersionInfo(kChromeDll));
-#elif defined(OS_LINUX) || defined(OS_MACOSX)
+#elif defined(OS_POSIX)
     // TODO(fmeawad): the version retrieved here belongs to the test module and
     // not the chrome binary, need to be changed to chrome binary instead.
     file_info.reset(FileVersionInfo::CreateFileVersionInfoForCurrentModule());

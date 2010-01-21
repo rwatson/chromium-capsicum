@@ -14,6 +14,11 @@
 #include "net/base/net_util.h"
 #include "net/base/sys_addrinfo.h"
 
+#if defined(OS_FREEBSD)
+#include <netinet/in.h>
+#include <sys/socket.h>
+#endif
+
 namespace net {
 
 namespace {
@@ -443,7 +448,7 @@ int SOCKS5ClientSocket::DoHandshakeReadComplete(int result) {
   return OK;
 }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 int SOCKS5ClientSocket::GetPeerName(struct sockaddr* name,
                                     socklen_t* namelen) {
   return transport_->GetPeerName(name, namelen);

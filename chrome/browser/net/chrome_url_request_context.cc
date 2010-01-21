@@ -31,7 +31,7 @@
 #include "net/url_request/url_request.h"
 #include "webkit/glue/webkit_glue.h"
 
-#if defined(OS_LINUX)
+#if defined(USE_NSS)
 #include "net/ocsp/nss_ocsp.h"
 #endif
 
@@ -188,7 +188,7 @@ ChromeURLRequestContext* FactoryForOriginal::Create() {
       new ChromeAppCacheService(profile_dir_path_, false));
   context->appcache_service()->set_request_context(context);
 
-#if defined(OS_LINUX)
+#if defined(USE_NSS)
   // TODO(ukai): find a better way to set the URLRequestContext for OCSP.
   net::SetURLRequestContextForOCSP(context);
 #endif
@@ -636,7 +636,7 @@ ChromeURLRequestContext::~ChromeURLRequestContext() {
     proxy_service_->SetProxyScriptFetcher(NULL);
   }
 
-#if defined(OS_LINUX)
+#if defined(USE_NSS)
   if (this == net::GetURLRequestContextForOCSP()) {
     // We are releasing the URLRequestContext used by OCSP handlers.
     net::SetURLRequestContextForOCSP(NULL);

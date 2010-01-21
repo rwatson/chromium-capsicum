@@ -38,7 +38,7 @@ class FindInPageTest : public InProcessBrowserTest {
 #if defined(TOOLKIT_VIEWS)
     views::View* view =
         reinterpret_cast<BrowserView*>(browser_window)->GetViewByID(view_id);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
     gfx::NativeWindow window = browser_window->GetNativeHandle();
     ASSERT_TRUE(window);
     GtkWidget* view = ViewIDUtil::GetWidget(GTK_WIDGET(window), view_id);

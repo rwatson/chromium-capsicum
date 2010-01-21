@@ -129,7 +129,7 @@ SkBitmap GetThumbnailForBackingStore(BackingStore* backing_store) {
   // can't actually be copied.
   const SkBitmap& bmp = temp_canvas.getTopPlatformDevice().accessBitmap(false);
 
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
   SkBitmap bmp = backing_store->PaintRectToBitmap(
       gfx::Rect(0, 0,
                 backing_store->size().width(), backing_store->size().height()));

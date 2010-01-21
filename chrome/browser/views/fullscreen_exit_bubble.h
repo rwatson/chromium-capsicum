@@ -10,7 +10,7 @@
 #include "chrome/browser/command_updater.h"
 #include "views/controls/link.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 namespace views {
 class WidgetGtk;
 }
@@ -72,7 +72,7 @@ class FullscreenExitBubble : public views::LinkController,
   // The popup itself, which is a slightly modified WidgetWin.  We need to use
   // a WidgetWin (and thus an HWND) to make the popup float over other HWNDs.
   FullscreenExitPopup* popup_;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   views::WidgetGtk* popup_;
 #endif
 

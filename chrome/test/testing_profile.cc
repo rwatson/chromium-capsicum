@@ -15,7 +15,7 @@
 #include "net/url_request/url_request_context.h"
 #include "webkit/database/database_tracker.h"
 
-#if defined(OS_LINUX) && !defined(TOOLKIT_VIEWS)
+#if defined(TOOLKIT_GTK) && !defined(TOOLKIT_VIEWS)
 #include "chrome/browser/gtk/gtk_theme_provider.h"
 #endif
 
@@ -221,7 +221,7 @@ webkit_database::DatabaseTracker* TestingProfile::GetDatabaseTracker() {
 
 void TestingProfile::InitThemes() {
   if (!created_theme_provider_) {
-#if defined(OS_LINUX) && !defined(TOOLKIT_VIEWS)
+#if defined(TOOLKIT_GTK) && !defined(TOOLKIT_VIEWS)
     theme_provider_.reset(new GtkThemeProvider);
 #else
     theme_provider_.reset(new BrowserThemeProvider);

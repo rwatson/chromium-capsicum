@@ -33,7 +33,7 @@
 #if defined(OS_WIN)
 #include "app/win_util.h"
 #include "views/widget/widget_win.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "views/widget/widget_gtk.h"
 #endif
 
@@ -1585,7 +1585,7 @@ bool TabStrip::IsCursorInTabStripZone() const {
 #if defined(OS_WIN)
   DWORD pos = GetMessagePos();
   gfx::Point cursor_point(pos);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   // TODO: make sure this is right with multiple monitors.
   GdkScreen* screen = gdk_screen_get_default();
   GdkDisplay* display = gdk_screen_get_display(screen);

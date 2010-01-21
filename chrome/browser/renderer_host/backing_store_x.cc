@@ -43,6 +43,9 @@ static void DestroySharedImage(Display* display,
   XShmDetach(display, shminfo);
   XDestroyImage(image);
   shmdt(shminfo->shmaddr);
+#if defined(OS_FREEBSD)
+  shmctl(shminfo->shmid, IPC_RMID, 0);
+#endif
 }
 
 BackingStore::BackingStore(RenderWidgetHost* widget,
@@ -57,7 +60,11 @@ BackingStore::BackingStore(RenderWidgetHost* widget,
       visual_(visual),
       visual_depth_(depth),
       root_window_(x11_util::GetX11RootWindow()) {
+#if defined(OS_FREEBSD)
+  COMPILE_ASSERT(BYTE_ORDER == LITTLE_ENDIAN, assumes_little_endian);
+#else
   COMPILE_ASSERT(__BYTE_ORDER == __LITTLE_ENDIAN, assumes_little_endian);
+#endif
 
   pixmap_ = XCreatePixmap(display_, root_window_,
                           size.width(), size.height(), depth);
@@ -420,7 +427,9 @@ SkBitmap BackingStore::PaintRectToBitmap(const gfx::Rect& rect) {
     }
 
     void* mapped_memory = shmat(shminfo.shmid, NULL, SHM_RDONLY);
+#if !defined(OS_FREEBSD)
     shmctl(shminfo.shmid, IPC_RMID, 0);
+#endif
     if (mapped_memory == (void*)-1) {
       XDestroyImage(image);
       return SkBitmap();

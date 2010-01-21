@@ -8,9 +8,9 @@
 #include <sstream>
 
 #include "base/message_loop.h"
-#if defined(OS_LINUX) || defined(OS_MACOSX)
+#if defined(OS_POSIX)
 #include "base/file_descriptor_posix.h"
-#endif  // defined(OS_LINUX) || defined(OS_MACOSX)
+#endif  // defined(OS_POSIX)
 #include "base/platform_thread.h"
 #include "base/process_util.h"
 #include "base/sync_socket.h"

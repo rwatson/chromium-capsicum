@@ -369,7 +369,7 @@ ProcessMetrics::ProcessMetrics(ProcessHandle process,
     : process_(process),
       last_time_(0),
       last_system_time_(0)
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       , last_cpu_(0)
 #elif defined (OS_MACOSX)
       , port_provider_(port_provider)

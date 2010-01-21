@@ -33,7 +33,7 @@
 #include "webkit/glue/glue_util.h"
 #include "webkit/glue/webkit_glue.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include "chrome/renderer/renderer_sandbox_support_linux.h"
 #endif
 
@@ -63,7 +63,7 @@ WebKit::WebMimeRegistry* RendererWebKitClientImpl::mimeRegistry() {
 }
 
 WebKit::WebSandboxSupport* RendererWebKitClientImpl::sandboxSupport() {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   return &sandbox_support_;
 #else
   return NULL;
@@ -276,7 +276,7 @@ bool RendererWebKitClientImpl::SandboxSupport::ensureFontLoaded(HFONT font) {
   return RenderThread::current()->Send(new ViewHostMsg_LoadFont(logfont));
 }
 
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 
 WebString RendererWebKitClientImpl::SandboxSupport::getFontFamilyForCharacters(
     const WebKit::WebUChar* characters, size_t num_characters) {

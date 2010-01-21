@@ -15,7 +15,7 @@
 #include "views/widget/root_view.h"
 #include "views/window/window.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include "chrome/browser/views/tabs/tab_overview_types.h"
 #endif
 
@@ -215,7 +215,7 @@ void InfoBubble::Close() {
 
 InfoBubble::InfoBubble()
     :
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
       WidgetGtk(TYPE_WINDOW),
 #endif
       delegate_(NULL),
@@ -236,7 +236,7 @@ void InfoBubble::Init(views::Window* parent,
   set_window_style(WS_POPUP | WS_CLIPCHILDREN);
   set_window_ex_style(WS_EX_TOOLWINDOW);
   WidgetWin::Init(parent->GetNativeWindow(), gfx::Rect());
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   MakeTransparent();
   make_transient_to_parent();
   WidgetGtk::Init(GTK_WIDGET(parent->GetNativeWindow()), gfx::Rect());
@@ -303,7 +303,7 @@ void InfoBubble::Init(views::Window* parent,
 #if defined(OS_WIN)
   border_->ShowWindow(SW_SHOW);
   ShowWindow(SW_SHOW);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   views::WidgetGtk::Show();
 #endif
 }
@@ -318,7 +318,7 @@ void InfoBubble::OnActivate(UINT action, BOOL minimized, HWND window) {
     GetRootView()->GetChildViewAt(0)->RequestFocus();
   }
 }
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 void InfoBubble::IsActiveChanged() {
   if (!IsActive())
     Close();
@@ -335,7 +335,7 @@ void InfoBubble::Close(bool closed_by_escape) {
 #if defined(OS_WIN)
   border_->Close();
   WidgetWin::Close();
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   WidgetGtk::Close();
 #endif
 }

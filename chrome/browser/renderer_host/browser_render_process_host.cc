@@ -298,11 +298,11 @@ bool BrowserRenderProcessHost::Init(bool is_extensions_process,
     in_process_renderer_.reset(new RendererMainThread(channel_id));
 
     base::Thread::Options options;
-#if !defined(OS_LINUX)
+#if !defined(USE_X11)
     // In-process plugins require this to be a UI message loop.
     options.message_loop_type = MessageLoop::TYPE_UI;
 #else
-    // We can't have multiple UI loops on Linux, so we don't support
+    // We can't have multiple UI loops on X, so we don't support
     // in-process plugins.
     options.message_loop_type = MessageLoop::TYPE_DEFAULT;
 #endif
@@ -672,9 +672,9 @@ TransportDIB* BrowserRenderProcessHost::MapTransportDIB(
   // On OSX, the browser allocates all DIBs and keeps a file descriptor around
   // for each.
   return widget_helper_->MapTransportDIB(dib_id);
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   return TransportDIB::Map(dib_id);
-#endif  // defined(OS_LINUX)
+#endif  // defined(OS_NIX)
 }
 
 TransportDIB* BrowserRenderProcessHost::GetTransportDIB(

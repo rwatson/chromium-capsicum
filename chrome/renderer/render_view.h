@@ -731,7 +731,7 @@ class RenderView : public RenderWidget,
 
   void Print(WebKit::WebFrame* frame, bool script_initiated);
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   void UpdateFontRenderingFromRendererPrefs();
 #else
   void UpdateFontRenderingFromRendererPrefs() { }

@@ -27,6 +27,9 @@ TransportDIB::TransportDIB()
 TransportDIB::~TransportDIB() {
   if (address_ != kInvalidAddress) {
     shmdt(address_);
+#if defined(OS_FREEBSD)
+    shmctl(key_, IPC_RMID, 0);
+#endif
     address_ = kInvalidAddress;
   }
 
@@ -52,7 +55,13 @@ TransportDIB* TransportDIB::Create(size_t size, uint32 sequence_num) {
   // Here we mark the shared memory for deletion. Since we attached it in the
   // line above, it doesn't actually get deleted but, if we crash, this means
   // that the kernel will automatically clean it up for us.
+#if !defined(OS_FREEBSD)
+// BSD: A shmctl IPC_RMID call here renders all future shared memory calls for
+// BSD: a particular key to fail on FreeBSD, so I moved this call to the
+// BSD: destructor.  Of course, this means chromium crashes on FreeBSD don't
+// BSD: clean up shared memory.
   shmctl(shmkey, IPC_RMID, 0);
+#endif
   if (address == kInvalidAddress)
     return NULL;
 

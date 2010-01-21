@@ -7,10 +7,10 @@
 
 #include "build/build_config.h"
 
-#if defined(OS_LINUX)
-#include "chrome/browser/importer/nss_decryptor_linux.h"
-#elif defined(OS_MACOSX)
+#if defined(OS_MACOSX)
 #include "chrome/browser/importer/nss_decryptor_mac.h"
+#elif defined(OS_NIX)
+#include "chrome/browser/importer/nss_decryptor_linux.h"
 #elif defined(OS_WIN)
 #include "chrome/browser/importer/nss_decryptor_win.h"
 #endif

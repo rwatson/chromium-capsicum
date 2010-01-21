@@ -25,7 +25,12 @@ bool GetTempDir(FilePath* path) {
 }
 
 bool GetShmemTempDir(FilePath* path) {
+#if defined(OS_LINUX)
   *path = FilePath("/dev/shm");
+#else
+//BSD not sure this is the best way to do this but it works for now
+  *path = FilePath("/tmp");
+#endif
   return true;
 }
 

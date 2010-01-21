@@ -185,7 +185,7 @@ Browser::~Browser() {
 
   BrowserList::RemoveBrowser(this);
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   if (!BrowserList::HasBrowserWithProfile(profile_)) {
     // We're the last browser window with this profile. We need to nuke the
     // TabRestoreService, which will start the shutdown of the
@@ -496,7 +496,7 @@ string16 Browser::GetWindowTitleForCurrentTab() const {
   // On Mac or ChromeOS, we don't want to suffix the page title with
   // the application name.
   return title;
-#elif defined(OS_WIN) || defined(OS_LINUX)
+#elif defined(OS_WIN) || defined(OS_NIX)
   int string_id = IDS_BROWSER_WINDOW_TITLE_FORMAT;
   // Don't append the app name to window titles when we're not displaying a
   // distributor logo for the frame.
@@ -551,7 +551,7 @@ void Browser::OnWindowClosing() {
   if (!ShouldCloseWindow())
     return;
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   // We don't want to do this on Mac since closing all windows isn't a sign
   // that the app is shutting down.
   if (BrowserList::size() == 1)
@@ -982,9 +982,9 @@ void Browser::ToggleFullscreenMode() {
 
   UserMetrics::RecordAction("ToggleFullscreen", profile_);
   window_->SetFullscreen(!window_->IsFullscreen());
-  // On Linux, setting fullscreen mode is an async call to the X server, which
+  // On X11, setting fullscreen mode is an async call to the X server, which
   // may or may not support fullscreen mode.
-#if !defined(OS_LINUX)
+#if !defined(USE_X11)
   UpdateCommandsForFullscreenMode(window_->IsFullscreen());
 #endif
 }
@@ -1197,7 +1197,7 @@ void Browser::OpenFile() {
 
 void Browser::OpenCreateShortcutsDialog() {
   UserMetrics::RecordAction("CreateShortcut", profile_);
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   TabContents* current_tab = GetSelectedTabContents();
   DCHECK(current_tab && web_app::IsValidUrl(current_tab->GetURL())) <<
       "Menu item should be disabled.";
@@ -1772,7 +1772,7 @@ void Browser::DuplicateContentsAt(int index) {
 }
 
 void Browser::CloseFrameAfterDragSession() {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   // This is scheduled to run after we return to the message loop because
   // otherwise the frame will think the drag session is still active and ignore
   // the request.

@@ -36,7 +36,7 @@
 #include "net/base/mock_host_resolver.h"
 #include "sandbox/src/dep.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include "base/singleton.h"
 #include "chrome/browser/renderer_host/render_sandbox_host_linux.h"
 #include "chrome/browser/zygote_host_linux.h"
@@ -253,7 +253,7 @@ void InProcessBrowserTest::RunTestOnMainThreadLoop() {
       ChromeThread::IO, FROM_HERE,
       NewRunnableFunction(chrome_browser_net::SetUrlRequestMocksEnabled, true));
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // Initialize the RenderSandbox and Zygote hosts. Apparently they get used
   // for InProcessBrowserTest, and this is not the normal browser startup path.
   Singleton<LinuxHostInit>::get();

@@ -493,7 +493,7 @@
         '..',
       ],
       'conditions': [
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             '../build/linux/system.gyp:gtk',
           ],
@@ -698,7 +698,7 @@
         'sync_proto',
       ],
       'conditions': [
-        ['OS=="linux"', {
+        ['OS=="linux" or OS == "freebsd"', {
           'sources!': [
             'browser/sync/notifier/base/network_status_detector_task_mt.cc',
           ],
@@ -841,6 +841,12 @@
           'dependencies': [
             '../build/linux/system.gyp:gtk'
           ],
+        }],
+        [ 'OS == "freebsd"', {
+          'dependencies': [
+            '../build/linux/system.gyp:gtk'
+          ],
+          'sources/': [['exclude', '^browser/sync/util/path_helpers_linux.cc$']],
         }],
         ['OS=="mac"', {
           'link_settings': {

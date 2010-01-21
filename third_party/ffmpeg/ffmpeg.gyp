@@ -47,7 +47,7 @@
     #
     # TODO(ajwong): Per the comment above, reduce this conditional's size and
     # determine if in-tree build in Windows is tractable.
-    ['(OS!="linux" and OS!="freebsd" and OS!="mac") or use_system_ffmpeg!=0', {
+    ['(OS!="linux" and OS!="mac") or use_system_ffmpeg!=0', {
       'variables': {
         'target_for_binaries': 'ffmpeg_binaries',
         'ffmpeg_include_root': 'include',
@@ -681,7 +681,7 @@
             ],
           },
         ],
-        ['OS=="linux" or OS=="freebsd"', {
+        ['OS=="linux"', {
           'link_settings': {
             'libraries': [
               # We need dl for dlopen() and friends.

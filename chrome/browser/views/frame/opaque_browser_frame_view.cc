@@ -30,7 +30,7 @@
 #include "app/win_util.h"
 #endif
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include "views/window/hit_test.h"
 #endif
 

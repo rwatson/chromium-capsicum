@@ -4,7 +4,7 @@
 
 #include "chrome/browser/views/frame/browser_view.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <gtk/gtk.h>
 #endif
 
@@ -80,7 +80,7 @@
 #include "app/win_util.h"
 #include "chrome/browser/jumplist.h"
 #include "chrome/browser/views/theme_install_bubble_view.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "chrome/browser/views/accelerator_table_gtk.h"
 #include "views/window/hit_test.h"
 #endif
@@ -1144,7 +1144,7 @@ void BrowserView::ShowProfileErrorDialog(int message_id) {
   std::wstring message = l10n_util::GetString(message_id);
   win_util::MessageBox(GetNativeHandle(), message, title,
                        MB_OK | MB_ICONWARNING | MB_TOPMOST);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   std::string title = l10n_util::GetStringUTF8(IDS_PRODUCT_NAME);
   std::string message = l10n_util::GetStringUTF8(message_id);
   GtkWidget* dialog = gtk_message_dialog_new(GetNativeHandle(),

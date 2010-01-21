@@ -82,7 +82,7 @@ TEST_F(BlockedPopupContainerInteractiveTest, TestOpenAndResizeTo) {
   EXPECT_EQ(300, rect.width());
   EXPECT_EQ(320, rect.height());
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // It seems we have to wait a little bit for the widgets to spin up before
   // we can start clicking on them.
   PlatformThread::Sleep(500);
@@ -227,7 +227,7 @@ TEST_F(BlockedPopupContainerInteractiveTest, ShowAlertFromNormalPopup) {
   scoped_refptr<TabProxy> popup_tab(popup_browser->GetTab(0));
   ASSERT_TRUE(popup_tab.get());
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // It seems we have to wait a little bit for the widgets to spin up before
   // we can start clicking on them.
   PlatformThread::Sleep(500);

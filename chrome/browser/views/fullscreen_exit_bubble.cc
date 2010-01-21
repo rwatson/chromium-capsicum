@@ -17,7 +17,7 @@
 #if defined(OS_WIN)
 #include "app/l10n_util_win.h"
 #include "views/widget/widget_win.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "views/widget/widget_gtk.h"
 #endif
 
@@ -114,7 +114,7 @@ class FullscreenExitBubble::FullscreenExitPopup : public views::WidgetWin {
     return MA_NOACTIVATE;
   }
 };
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 // TODO: figure out the equivalent of MA_NOACTIVATE for gtk.
 #endif
 
@@ -149,7 +149,7 @@ FullscreenExitBubble::FullscreenExitBubble(
   popup_->set_window_style(WS_POPUP);
   popup_->set_window_ex_style(WS_EX_LAYERED | WS_EX_TOOLWINDOW |
                               l10n_util::GetExtendedTooltipStyles());
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   popup_ = new views::WidgetGtk(views::WidgetGtk::TYPE_POPUP);
   popup_->MakeTransparent();
 #endif
@@ -197,7 +197,7 @@ void FullscreenExitBubble::AnimationProgressed(
 #if defined(OS_WIN)
     popup_->MoveWindow(popup_rect.x(), popup_rect.y(), popup_rect.width(),
                        popup_rect.height());
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
     popup_->SetBounds(popup_rect);
 #endif
     popup_->Show();

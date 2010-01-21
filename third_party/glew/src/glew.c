@@ -103,7 +103,7 @@ void* NSGLGetProcAddress (const GLubyte *name)
 }
 #endif /* __APPLE__ */
 
-#if defined(__sgi) || defined (__sun) || defined(__linux__)
+#if defined(__sgi) || defined (__sun) || defined(__linux__) || defined(__FreeBSD__)
 #include <dlfcn.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -139,7 +139,7 @@ void* dlGetProcAddress (const GLubyte* name)
 #  if defined(__APPLE__)
 #    define glewGetProcAddress(name) NSGLGetProcAddress(name)
 #  else
-#    if defined(__sgi) || defined(__sun) || defined(__linux__)
+#    if defined(__sgi) || defined(__sun) || defined(__linux__) || defined(__FreeBSD__)
 #      define glewGetProcAddress(name) dlGetProcAddress(name)
 #    else /* Used to use this for Linux, but no longer */
 #      define glewGetProcAddress(name) (*glXGetProcAddressARB)(name)

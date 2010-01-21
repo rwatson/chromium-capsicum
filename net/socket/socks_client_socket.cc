@@ -12,6 +12,11 @@
 #include "net/base/net_util.h"
 #include "net/base/sys_addrinfo.h"
 
+#if defined(OS_FREEBSD)
+#include <netinet/in.h>
+#include <sys/socket.h>
+#endif
+
 namespace net {
 
 // Every SOCKS server requests a user-id from the client. It is optional
@@ -397,7 +402,7 @@ int SOCKSClientSocket::DoHandshakeReadComplete(int result) {
   // Note: we ignore the last 6 bytes as specified by the SOCKS protocol
 }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 int SOCKSClientSocket::GetPeerName(struct sockaddr* name,
                                    socklen_t* namelen) {
   return transport_->GetPeerName(name, namelen);

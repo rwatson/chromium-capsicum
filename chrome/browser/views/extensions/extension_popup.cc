@@ -17,7 +17,7 @@
 #include "views/widget/root_view.h"
 #include "views/window/window.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "chrome/browser/views/tabs/tab_overview_types.h"
 #include "views/widget/widget_gtk.h"
 #endif
@@ -52,7 +52,7 @@ ExtensionPopup::ExtensionPopup(ExtensionHost* host,
   // We should see if we can unify these classes.
 
   gfx::NativeView native_window = frame->GetNativeView();
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   border_widget_ = new views::WidgetGtk(views::WidgetGtk::TYPE_WINDOW);
   static_cast<views::WidgetGtk*>(border_widget_)->MakeTransparent();
   static_cast<views::WidgetGtk*>(border_widget_)->make_transient_to_parent();
@@ -62,7 +62,7 @@ ExtensionPopup::ExtensionPopup(ExtensionHost* host,
                                              Widget::DeleteOnDestroy);
 #endif
   border_widget_->Init(native_window, bounds());
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   TabOverviewTypes::instance()->SetWindowType(
       border_widget_->GetNativeView(),
       TabOverviewTypes::WINDOW_TYPE_CHROME_INFO_BUBBLE,

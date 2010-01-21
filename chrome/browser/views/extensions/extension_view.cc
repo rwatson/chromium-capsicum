@@ -11,7 +11,7 @@
 
 #if defined(OS_WIN)
 #include "chrome/browser/renderer_host/render_widget_host_view_win.h"
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 #include "chrome/browser/renderer_host/render_widget_host_view_gtk.h"
 #endif
 
@@ -99,7 +99,7 @@ void ExtensionView::CreateWidgetHostView() {
   HWND hwnd = view_win->Create(GetWidget()->GetNativeView());
   view_win->ShowWindow(SW_SHOW);
   Attach(hwnd);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   RenderWidgetHostViewGtk* view_gtk =
       static_cast<RenderWidgetHostViewGtk*>(view);
   view_gtk->InitAsChild();

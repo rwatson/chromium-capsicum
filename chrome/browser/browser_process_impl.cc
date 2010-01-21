@@ -42,7 +42,7 @@
 #include "views/focus/view_storage.h"
 #endif
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 // TODO(port): get rid of this.
 #include "chrome/common/temp_scaffolding_stubs.h"
 #else
@@ -208,7 +208,7 @@ BrowserProcessImpl::~BrowserProcessImpl() {
     resource_dispatcher_host()->Shutdown();
   }
 
-#if defined(OS_LINUX)
+#if defined(USE_X11)
   // The IO thread must outlive the BACKGROUND_X11 thread.
   background_x11_thread_.reset();
 #endif
@@ -338,7 +338,7 @@ void BrowserProcessImpl::CreateIOThread() {
   // invoke the io_thread() accessor.
   PluginService::GetInstance();
 
-#if defined(OS_LINUX)
+#if defined(USE_X11)
   // The lifetime of the BACKGROUND_X11 thread is a subset of the IO thread so
   // we start it now.
   scoped_ptr<base::Thread> background_x11_thread(

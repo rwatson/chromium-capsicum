@@ -14,6 +14,7 @@
 #include <errno.h>
 #include <semaphore.h>
 #include <arpa/inet.h>
+#include <netinet/in.h>
 #endif
 
 #include "base/thread.h"

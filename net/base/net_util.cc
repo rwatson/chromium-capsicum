@@ -27,6 +27,9 @@
 #endif
 
 #include "base/base64.h"
+#if defined(OS_FREEBSD)
+#include <netinet/in.h>
+#endif
 #include "base/basictypes.h"
 #include "base/file_path.h"
 #include "base/file_util.h"

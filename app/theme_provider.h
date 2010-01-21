@@ -10,7 +10,7 @@
 #include "base/basictypes.h"
 #include "third_party/skia/include/core/SkColor.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 typedef struct _GdkColor GdkColor;
 typedef struct _GdkPixbuf GdkPixbuf;
 #elif defined(OS_MACOSX)
@@ -67,7 +67,7 @@ class ThemeProvider {
   // implementations of ThemeProvider. Returns NULL on error.
   virtual RefCountedMemory* GetRawData(int id) const = 0;
 
-#if defined(OS_LINUX) && !defined(TOOLKIT_VIEWS)
+#if defined(TOOLKIT_GTK) && !defined(TOOLKIT_VIEWS)
   // Gets the GdkPixbuf with the specified |id|.  Returns a pointer to a shared
   // instance of the GdkPixbuf.  This shared GdkPixbuf is owned by the theme
   // provider and should not be freed.

@@ -131,7 +131,7 @@ void RenderWidgetHost::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(ViewHostMsg_FocusedNodeChanged, OnMsgFocusedNodeChanged)
     IPC_MESSAGE_HANDLER(ViewHostMsg_SetCursor, OnMsgSetCursor)
     IPC_MESSAGE_HANDLER(ViewHostMsg_ImeUpdateStatus, OnMsgImeUpdateStatus)
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     IPC_MESSAGE_HANDLER(ViewHostMsg_CreatePluginContainer,
                         OnMsgCreatePluginContainer)
     IPC_MESSAGE_HANDLER(ViewHostMsg_DestroyPluginContainer,
@@ -771,7 +771,7 @@ void RenderWidgetHost::OnMsgImeUpdateStatus(int control,
   }
 }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 
 void RenderWidgetHost::OnMsgCreatePluginContainer(gfx::PluginWindowHandle id) {
   // TODO(piman): view_ can only be NULL with delayed view creation in

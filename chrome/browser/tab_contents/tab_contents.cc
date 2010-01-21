@@ -293,7 +293,7 @@ TabContents::TabContents(Profile* profile,
                  NotificationService::AllSources());
   registrar_.Add(this, NotificationType::RENDER_WIDGET_HOST_DESTROYED,
                  NotificationService::AllSources());
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   registrar_.Add(this, NotificationType::BROWSER_THEME_CHANGED,
                  NotificationService::AllSources());
 #endif
@@ -2589,7 +2589,7 @@ void TabContents::Observe(NotificationType type,
       break;
     }
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
     case NotificationType::BROWSER_THEME_CHANGED: {
       renderer_preferences_util::UpdateFromSystemSettings(
           &renderer_preferences_, profile());

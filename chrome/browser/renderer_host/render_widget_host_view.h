@@ -160,7 +160,7 @@ class RenderWidgetHostView {
   virtual void SetActive(bool active) = 0;
 #endif
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   virtual void CreatePluginContainer(gfx::PluginWindowHandle id) = 0;
   virtual void DestroyPluginContainer(gfx::PluginWindowHandle id) = 0;
 #endif

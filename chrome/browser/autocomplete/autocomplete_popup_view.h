@@ -19,7 +19,7 @@ class BubblePositioner;
 namespace gfx {
 class Font;
 }
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
 class AutocompleteEditViewWin;
 class AutocompleteEditModel;
 class Profile;
@@ -45,7 +45,7 @@ class AutocompletePopupView {
   // Returns the popup's model.
   virtual AutocompletePopupModel* GetModel() = 0;
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   // Create a popup view implementation. It may make sense for this to become
   // platform independent eventually.
   static AutocompletePopupView* CreatePopupView(

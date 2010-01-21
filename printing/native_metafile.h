@@ -34,7 +34,7 @@ typedef PdfMetafile NativeMetafile;
 
 }  // namespace printing
 
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 
 #include "printing/pdf_ps_metafile_linux.h"
 

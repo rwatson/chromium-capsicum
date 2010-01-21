@@ -35,7 +35,7 @@
 #include "chrome/browser/views/frame/browser_view.h"
 #endif
 
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
 #include "chrome/browser/task_manager.h"
 #endif
 
@@ -76,7 +76,7 @@ void RegisterLocalState(PrefService* local_state) {
 #if defined(TOOLKIT_VIEWS)  // TODO(port): whittle this down as we port
   BrowserView::RegisterBrowserViewPrefs(local_state);
 #endif
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   TaskManager::RegisterPrefs(local_state);
 #endif
 }

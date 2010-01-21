@@ -64,7 +64,7 @@
 #if defined(OS_WIN) || defined(OS_MACOSX)
 #include "chrome/browser/printing/print_job_manager.h"
 #include "chrome/browser/printing/printer_query.h"
-#elif defined(OS_LINUX) || defined(OS_FREEBSD)
+#elif defined(OS_NIX)
 // TODO(port) remove this.
 #include "chrome/common/temp_scaffolding_stubs.h"
 #endif
@@ -368,7 +368,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& msg) {
 #if defined(OS_WIN)
       IPC_MESSAGE_HANDLER(ViewHostMsg_DuplicateSection, OnDuplicateSection)
 #endif
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_AllocateTempFileForPrinting,
                                       OnAllocateTempFileForPrinting)
       IPC_MESSAGE_HANDLER(ViewHostMsg_TempFileForPrintingWritten,
@@ -697,9 +697,9 @@ void ResourceMessageFilter::OnClipboardWriteObjects(
       ChromeThread::UI, FROM_HERE, new WriteClipboardTask(long_living_objects));
 }
 
-#if !defined(OS_LINUX)
-// On non-Linux platforms, clipboard actions can be performed on the IO thread.
-// On Linux, since the clipboard is linked with GTK, we either have to do this
+#if !defined(USE_X11)
+// On non-X/11 platforms, clipboard actions can be performed on the IO thread.
+// On X/11, since the clipboard is linked with GTK, we either have to do this
 // with GTK on the UI thread, or with Xlib on the BACKGROUND_X11 thread. In an
 // ideal world, we would do the latter. However, for now we're going to
 // terminate these calls on the UI thread. This risks deadlock in the case of

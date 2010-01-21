@@ -248,7 +248,7 @@ void CreateShortcutTask::Run() {
 }
 
 bool CreateShortcutTask::CreateShortcut() {
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   ShellIntegration::CreateDesktopShortcut(shortcut_info_);
   return true;  // assuming always success.
 #elif defined(OS_WIN)

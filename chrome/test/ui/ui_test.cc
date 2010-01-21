@@ -55,7 +55,7 @@ const wchar_t UITest::kFailedNoCrashService[] =
     L"NOTE: This test is expected to fail if crash_service.exe is not "
     L"running. Start it manually before running this test (see the build "
     L"output directory).";
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
     L"NOTE: This test is expected to fail if breakpad is not built in "
     L"or if chromium is not running headless (try CHROME_HEADLESS=1).";
 #else
@@ -1393,7 +1393,7 @@ void UITest::PrintMemoryUsageInfo(const char* test_name, FilePath data_dir) {
   PrintResult("ws_final_t", "", "ws_f_t" + trace_name,
               total_working_set_size, "bytes",
               false /* not important */);
-#elif defined(OS_LINUX) || defined(OS_MACOSX)
+#elif defined(OS_POSIX)
   PrintResult("vm_size_final_b", "", "vm_size_f_b" + trace_name,
               browser_virtual_size, "bytes",
               true /* important */);

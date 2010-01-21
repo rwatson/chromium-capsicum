@@ -27,7 +27,7 @@ namespace chrome {
 #if defined(OS_WIN)
 const wchar_t kBrowserProcessExecutableName[] = L"chrome.exe";
 const wchar_t kHelperProcessExecutableName[] = L"chrome.exe";
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 const wchar_t kBrowserProcessExecutableName[] = L"chrome";
 // Helper processes end up with a name of "exe" due to execing via
 // /proc/self/exe.  See bug 22703.
@@ -39,7 +39,7 @@ const wchar_t kHelperProcessExecutableName[] = PRODUCT_STRING_W L" Helper";
 #if defined(OS_WIN)
 const wchar_t kBrowserProcessExecutablePath[] = L"chrome.exe";
 const FilePath::CharType kHelperProcessExecutablePath[] = FPL("chrome.exe");
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 const wchar_t kBrowserProcessExecutablePath[] = L"chrome";
 const FilePath::CharType kHelperProcessExecutablePath[] = FPL("chrome");
 #elif defined(OS_MACOSX)

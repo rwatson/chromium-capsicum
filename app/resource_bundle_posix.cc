@@ -27,7 +27,7 @@ base::DataPack* LoadResourcesDataPak(FilePath resources_pak_path) {
 
 ResourceBundle::~ResourceBundle() {
   FreeImages();
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   FreeGdkPixBufs();
 #endif
   delete locale_resources_data_;

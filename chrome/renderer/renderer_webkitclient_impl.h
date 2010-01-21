@@ -13,7 +13,7 @@
 
 #if defined(OS_WIN)
 #include "third_party/WebKit/WebKit/chromium/public/win/WebSandboxSupport.h"
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 #include <string>
 #include <map>
 #include "base/lock.h"
@@ -87,7 +87,7 @@ class RendererWebKitClientImpl : public webkit_glue::WebKitClientImpl {
    public:
     virtual bool ensureFontLoaded(HFONT);
   };
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   class SandboxSupport : public WebKit::WebSandboxSupport {
    public:
     virtual WebKit::WebString getFontFamilyForCharacters(
@@ -106,7 +106,7 @@ class RendererWebKitClientImpl : public webkit_glue::WebKitClientImpl {
   webkit_glue::WebClipboardImpl clipboard_;
 
   MimeRegistry mime_registry_;
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   SandboxSupport sandbox_support_;
 #endif
 

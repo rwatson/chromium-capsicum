@@ -106,7 +106,7 @@ class DiagnosticsModelMac : public DiagnosticsModelImpl {
   DISALLOW_COPY_AND_ASSIGN(DiagnosticsModelMac);
 };
 
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 class DiagnosticsModelLinux : public DiagnosticsModelImpl {
  public:
   DiagnosticsModelLinux() {
@@ -130,7 +130,7 @@ DiagnosticsModel* MakeDiagnosticsModel() {
   return new DiagnosticsModelWin();
 #elif defined(OS_MACOSX)
   return new DiagnosticsModelMac();
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   return new DiagnosticsModelLinux();
 #endif
 }

@@ -28,7 +28,7 @@
         'FEATURE_ENABLE_VOICEMAIL',
       ],
       'conditions': [
-        ['OS=="linux" or OS=="mac"', {
+        ['OS=="linux" or OS=="mac" or OS=="freebsd"', {
           'defines': [
             'POSIX',
           ],
@@ -41,9 +41,14 @@
           '../third_party/platformsdk_win2008_6_1/files/Include',
         ],
       }],
-      ['OS=="linux" or OS=="mac"', {
+      ['OS=="linux" or OS=="mac" or OS=="freebsd"', {
         'defines': [
           'POSIX',
+        ],
+      }],
+      ['OS=="freebsd"', {
+        'defines': [
+          'BSD',
         ],
       }],
     ],
@@ -272,7 +277,7 @@
             'overrides/talk/base/winsock_initializer.cc',
           ],
         }],
-        ['OS=="linux" or OS=="mac"', {
+        ['OS=="linux" or OS=="mac" or OS=="freebsd"', {
           'sources': [
             'files/talk/base/unixfilesystem.cc',
           ],

@@ -6,7 +6,7 @@
 #include "build/build_config.h"
 #if defined(OS_WIN)
 #include "net/base/network_change_notifier_win.h"
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 #include "net/base/network_change_notifier_linux.h"
 #elif defined(OS_MACOSX)
 #include "net/base/network_change_notifier_mac.h"
@@ -19,7 +19,7 @@ scoped_refptr<NetworkChangeNotifier>
     NetworkChangeNotifier::CreateDefaultNetworkChangeNotifier() {
 #if defined(OS_WIN)
   return new NetworkChangeNotifierWin();
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   return new NetworkChangeNotifierLinux();
 #elif defined(OS_MACOSX)
   return new NetworkChangeNotifierMac();

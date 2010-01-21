@@ -25,9 +25,9 @@
 #include "chrome/common/result_codes.h"
 #include "chrome/installer/util/google_update_settings.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include "base/linux_util.h"
-#endif  // OS_LINUX
+#endif  // OS_NIX
 
 #if defined(OS_POSIX)
 // This is defined in chrome/browser/google_update_settings_posix.cc.  It's the

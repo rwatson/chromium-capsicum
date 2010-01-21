@@ -444,7 +444,7 @@ class ProcessMetrics {
   int64 last_time_;
   int64 last_system_time_;
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // Jiffie count at the last_time_ we updated.
   int last_cpu_;
 #endif

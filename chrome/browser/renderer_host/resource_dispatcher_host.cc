@@ -1025,7 +1025,7 @@ void ResourceDispatcherHost::OnCertificateRequested(
     net::SSLCertRequestInfo* cert_request_info) {
   DCHECK(request);
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   bool select_first_cert = CommandLine::ForCurrentProcess()->HasSwitch(
       switches::kAutoSSLClientAuth);
   net::X509Certificate* cert =

@@ -1889,7 +1889,7 @@
             ['exclude', '^browser/chromeos'],
           ],
         }],
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             # Temporarily disabled while we figure some stuff out.
             # http://code.google.com/p/chromium/issues/detail?id=12351
@@ -2366,7 +2366,7 @@
                 ['include', '^browser/gtk/external_protocol_dialog_gtk.h'],
               ],
             }],
-            ['OS=="linux" and chromeos==0 and toolkit_views==0', {
+            ['(OS=="linux" or OS=="freebsd") and chromeos==0 and toolkit_views==0', {
               'sources/': [
                 ['include', '^browser/printing/print_dialog_gtk.cc'],
                 ['include', '^browser/printing/print_dialog_gtk.h'],

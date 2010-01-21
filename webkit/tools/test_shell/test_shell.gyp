@@ -654,7 +654,7 @@
                 ],
               },
             }],
-            ['OS=="linux"', {
+            ['OS=="linux" or OS=="freebsd"', {
               'sources!': [
                 # Needs simple event record type porting
                 '../../glue/plugins/test/plugin_windowless_test.cc',

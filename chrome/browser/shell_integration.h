@@ -57,7 +57,7 @@ class ShellIntegration {
     bool create_in_quick_launch_bar;
   };
 
-#if defined(OS_LINUX)
+#if defined(USE_X11)
   // Returns filename for .desktop file based on |url|, sanitized for security.
   static FilePath GetDesktopShortcutFilename(const GURL& url);
 
@@ -72,7 +72,7 @@ class ShellIntegration {
   // returning from this function, because actual file operation is done on the
   // file thread.
   static void CreateDesktopShortcut(const ShortcutInfo& shortcut_info);
-#endif  // defined(OS_LINUX)
+#endif  // defined(USE_X11)
 
 #if defined(OS_WIN)
   // Generates Win7 app id for given app name and profile path. The returned app

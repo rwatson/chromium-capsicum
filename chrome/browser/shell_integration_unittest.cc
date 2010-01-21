@@ -13,7 +13,7 @@
 
 #define FPL FILE_PATH_LITERAL
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 TEST(ShellIntegrationTest, GetDesktopShortcutFilename) {
   const struct {
     const FilePath::CharType* path;

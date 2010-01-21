@@ -33,6 +33,8 @@
         'audio/audio_util.h',
         'audio/fake_audio_output_stream.cc',
         'audio/fake_audio_output_stream.h',
+        'audio/freebsd/audio_manager_freebsd.cc',
+        'audio/freebsd/audio_manager_freebsd.h',
         'audio/linux/audio_manager_linux.cc',
         'audio/linux/audio_manager_linux.h',
         'audio/linux/alsa_output.cc',
@@ -346,7 +348,7 @@
         },
       ],
     }],
-    ['OS=="linux"', {
+    ['OS=="linux" or OS=="freebsd"', {
       'targets': [
         {
           'target_name': 'player_x11',

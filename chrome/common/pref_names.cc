@@ -161,9 +161,9 @@ const wchar_t kDnsStartupPrefetchList[] = L"StartupDNSPrefetchList";
 // This list is adaptively grown and pruned.
 extern const wchar_t kDnsHostReferralList[] = L"HostReferralList";
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 // Prefs for SSLConfigServicePref.  Currently, these are only present on
-// and used by Linux.
+// and used by Linux and FreeBSD.
 extern const wchar_t kCertRevocationCheckingEnabled[] =
     L"ssl.rev_checking.enabled";
 extern const wchar_t kSSL2Enabled[] = L"ssl.ssl2.enabled";
@@ -246,7 +246,7 @@ const wchar_t kPrintingPageHeaderRight[] = L"printing.page.header.right";
 const wchar_t kPrintingPageFooterLeft[] = L"printing.page.footer.left";
 const wchar_t kPrintingPageFooterCenter[] = L"printing.page.footer.center";
 const wchar_t kPrintingPageFooterRight[] = L"printing.page.footer.right";
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 // GTK specific preference on whether we should match the system GTK theme.
 const wchar_t kUsesSystemTheme[] = L"extensions.theme.use_system";
 #endif

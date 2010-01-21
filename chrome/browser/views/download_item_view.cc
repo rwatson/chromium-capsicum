@@ -306,7 +306,7 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
 
     // Extract the file extension (if any).
     FilePath filepath(download->original_name());
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     std::wstring extension = base::SysNativeMBToWide(filepath.Extension());
 #else
     std::wstring extension = filepath.Extension();
@@ -315,7 +315,7 @@ DownloadItemView::DownloadItemView(DownloadItem* download,
     // Remove leading '.'
     if (extension.length() > 0)
       extension = extension.substr(1);
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     std::wstring rootname =
         base::SysNativeMBToWide(filepath.BaseName().RemoveExtension().value());
 #else

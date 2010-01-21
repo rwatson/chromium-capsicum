@@ -387,7 +387,7 @@ std::string GetSystemLocale() {
   return ret;
 }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 // Split and normalize the language list specified by LANGUAGE environment.
 // LANGUAGE environment specifies a priority list of user prefered locales for
 // application UI messages. Locales are separated by ':' character. The format
@@ -458,7 +458,7 @@ std::string GetApplicationLocale(const std::wstring& pref_locale) {
 
   // Next, try the system locale.
   candidates.push_back(system_locale);
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   // On Linux, we also check LANGUAGE environment variable, which is supported
   // by gettext to specify a priority list of prefered languages.
   const char* env_language = ::getenv("LANGUAGE");
@@ -902,7 +902,7 @@ void WrapPathWithLTRFormatting(const FilePath& path,
     rtl_safe_path->append(UTF8ToUTF16(path.value()));
 #elif defined(OS_WIN)
     rtl_safe_path->append(path.value());
-#else  // defined(OS_LINUX)
+#else  // defined(OS_NIX)
     std::wstring wide_path = base::SysNativeMBToWide(path.value());
     rtl_safe_path->append(WideToUTF16(wide_path));
 #endif

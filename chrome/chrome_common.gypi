@@ -22,7 +22,7 @@
               'common/temp_scaffolding_stubs.h',
             ],
           }],
-          ['OS=="win" or OS=="linux"', {
+          ['OS=="win" or OS=="linux" or OS=="freebsd"', {
             'sources!': [
               'common/hi_res_timer_manager.cc',
               'common/hi_res_timer_manager.h',
@@ -283,7 +283,7 @@
         'common/zip.h',
       ],
       'conditions': [
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             '../build/linux/system.gyp:gtk',
           ],

@@ -23,7 +23,7 @@
 #include "views/widget/root_view.h"
 #include "views/widget/widget.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "app/scoped_handle_gtk.h"
 #endif
 

@@ -422,7 +422,7 @@ class RenderWidgetHost : public IPC::Channel::Listener,
   // Using int instead of ViewHostMsg_ImeControl for control's type to avoid
   // having to bring in render_messages.h in a header file.
   void OnMsgImeUpdateStatus(int control, const gfx::Rect& caret_rect);
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   void OnMsgCreatePluginContainer(gfx::PluginWindowHandle id);
   void OnMsgDestroyPluginContainer(gfx::PluginWindowHandle id);
 #elif defined(OS_MACOSX)

@@ -45,7 +45,7 @@
 #include "webkit/glue/plugins/plugin_constants_win.h"
 #endif
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "app/gfx/gtk_native_view_id_manager.h"
 #endif
 
@@ -281,13 +281,13 @@ void PluginProcessHost::AddWindow(HWND window) {
 
 #endif  // defined(OS_WIN)
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 void PluginProcessHost::OnMapNativeViewId(gfx::NativeViewId id,
                                           gfx::PluginWindowHandle* output) {
   *output = 0;
   Singleton<GtkNativeViewManager>()->GetXIDForId(output, id);
 }
-#endif  // defined(OS_LINUX)
+#endif  // defined(TOOLKIT_GTK)
 
 PluginProcessHost::PluginProcessHost()
     : ChildProcessHost(
@@ -469,7 +469,7 @@ void PluginProcessHost::OnMessageReceived(const IPC::Message& msg) {
                         OnPluginWindowDestroyed)
     IPC_MESSAGE_HANDLER(PluginProcessHostMsg_DownloadUrl, OnDownloadUrl)
 #endif
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     IPC_MESSAGE_HANDLER(PluginProcessHostMsg_MapNativeViewId,
                         OnMapNativeViewId)
 #endif

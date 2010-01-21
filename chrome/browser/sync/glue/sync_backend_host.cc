@@ -148,6 +148,8 @@ std::string MakeUserAgentForSyncapi() {
   user_agent += "WIN ";
 #elif defined(OS_LINUX)
   user_agent += "LINUX ";
+#elif defined(OS_FREEBSD)
+  user_agent += "FREEBSD ";
 #elif defined(OS_MACOSX)
   user_agent += "MAC ";
 #endif

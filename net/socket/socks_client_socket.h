@@ -52,7 +52,7 @@ class SOCKSClientSocket : public ClientSocket {
   virtual bool SetReceiveBufferSize(int32 size);
   virtual bool SetSendBufferSize(int32 size);
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // Needed by ssl_client_socket_nss.
   virtual int GetPeerName(struct sockaddr* name, socklen_t* namelen);
 #endif

@@ -44,7 +44,7 @@
         '../third_party/glew/src/glew.c',
       ],
       'conditions': [
-        [ 'OS=="linux"',
+        [ 'OS=="linux" or OS=="freebsd"',
           {
             'all_dependent_settings': {
               'defines': [
@@ -246,7 +246,7 @@
         'command_buffer/service/resource.h',
       ],
       'conditions': [
-        ['OS == "linux"',
+        ['OS == "linux" or OS == "freebsd"',
           {
             'sources': [
               'command_buffer/service/gpu_processor_linux.cc',

@@ -163,7 +163,7 @@
         '../base/base.gyp:base',
       ],
       'conditions': [
-        [ 'OS == "linux"', {
+        [ 'OS == "linux" or OS == "freebsd"', {
           'dependencies': [
             '../build/linux/system.gyp:gconf',
             '../build/linux/system.gyp:gdk',
@@ -182,7 +182,7 @@
             ],
           },
         ],
-        [ 'OS == "linux"', {
+        [ 'OS == "linux" or OS == "freebsd"', {
             'sources/': [ ['exclude', '_(mac|win)\\.cc$'] ],
           },
           {  # else: OS != "linux"
@@ -508,7 +508,7 @@
             '../v8/tools/gyp/v8.gyp:v8',
           ],
         }],
-        [ 'OS == "linux"', {
+        [ 'OS == "linux" or OS == "freebsd"', {
           'dependencies': [
             '../build/linux/system.gyp:gconf',
             '../build/linux/system.gyp:gdk',
@@ -531,10 +531,16 @@
             ],
           },
         ],
-        [ 'OS == "linux"', {
+        [ 'OS == "linux" or OS == "freebsd"', {
             'sources/': [ ['exclude', '_(mac|win)\\.cc$'] ],
+            'conditions': [
+	            [ 'OS == "freebsd"', {
+	              'sources!': [ 'proxy/proxy_config_service_linux.cc' ],
+	              },
+	            ],
+            ],
           },
-          {  # else: OS != "linux"
+          {  # else: OS != "linux" and OS != "freebsd"
             'sources!': [
               'ocsp/nss_ocsp.cc',
               'ocsp/nss_ocsp.h',
@@ -680,8 +686,14 @@
             'sources/': [ ['exclude', '_(mac|linux|posix)_unittest\\.cc$'] ],
           },
         ],
-        [ 'OS == "linux"', {
+        [ 'OS == "linux" or OS == "freebsd"', {
             'sources/': [ ['exclude', '_(mac|win)_unittest\\.cc$'] ],
+            'conditions': [
+              [ 'OS == "freebsd"', {
+                'sources!': [ 'proxy/proxy_config_service_linux_unittest.cc' ],
+                },
+              ],
+            ],
             'dependencies': [
               '../build/linux/system.gyp:gtk',
             ],

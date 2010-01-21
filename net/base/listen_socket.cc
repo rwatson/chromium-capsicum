@@ -20,6 +20,10 @@
 #endif
 #endif
 
+#if defined(OS_FREEBSD)
+#include <netinet/in.h>
+#endif
+
 #include "base/eintr_wrapper.h"
 #include "net/base/net_util.h"
 #include "net/base/listen_socket.h"

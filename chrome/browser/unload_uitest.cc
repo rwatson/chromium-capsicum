@@ -158,7 +158,7 @@ class UnloadTest : public UITest {
   }
 
   void ClickModalDialogButton(MessageBoxFlags::DialogButton button) {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
     bool modal_dialog_showing = false;
     MessageBoxFlags::DialogButton available_buttons;
     EXPECT_TRUE(automation()->WaitForAppModalDialog(action_timeout_ms()));

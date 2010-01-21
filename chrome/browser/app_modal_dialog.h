@@ -14,7 +14,7 @@
 #if defined(OS_WIN)
 class JavascriptMessageBoxDialog;
 typedef JavascriptMessageBoxDialog* NativeDialog;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
 typedef struct _GtkWidget GtkWidget;
 typedef GtkWidget* NativeDialog;
 #elif defined(OS_MACOSX)

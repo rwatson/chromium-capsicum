@@ -146,7 +146,7 @@ void ApplyKeyModifier(const std::wstring& arg, WebKeyboardEvent* event) {
     event->modifiers |= WebInputEvent::ShiftKey;
   } else if (!wcscmp(arg_string, L"altKey")) {
     event->modifiers |= WebInputEvent::AltKey;
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if !defined(OS_MACOSX)
     // On Windows all keys with Alt modifier will be marked as system key.
     // We keep the same behavior on Linux, see:
     // third_party/WebKit/WebKit/chromium/src/gtk/WebInputEventFactory.cpp

@@ -42,7 +42,7 @@
 #include "webkit/glue/password_form.h"
 #include "webkit/glue/webpreferences.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 // Remove when we've finished porting the supporting classes.
 #include "chrome/common/temp_scaffolding_stubs.h"
 #elif defined(OS_WIN) || defined(OS_MACOSX)
@@ -672,7 +672,7 @@ class TabContents : public PageNavigator,
   friend class TabContentsViewWin;
 #elif defined(OS_MACOSX)
   friend class TabContentsViewMac;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   friend class TabContentsViewGtk;
 #endif
 

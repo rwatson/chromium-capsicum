@@ -42,7 +42,7 @@
               'win_util.h',
             ],
           }],
-          ['OS!="linux"', {
+          ['OS!="linux" and OS!="freebsd"', {
             'sources!': [
               'gfx/gtk_util.cc',
               'gfx/gtk_util.h',
@@ -197,7 +197,7 @@
         'throb_animation.h',
       ],
       'conditions': [
-        ['OS=="linux"', {
+        ['OS=="linux" or OS=="freebsd"', {
           'dependencies': [
             # font_gtk.cc uses fontconfig.
             # TODO(evanm): I think this is wrong; it should just use GTK.

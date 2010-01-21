@@ -59,7 +59,7 @@ extern const wchar_t kAlternateErrorPagesEnabled[];
 extern const wchar_t kDnsPrefetchingEnabled[];
 extern const wchar_t kDnsStartupPrefetchList[];
 extern const wchar_t kDnsHostReferralList[];
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 extern const wchar_t kCertRevocationCheckingEnabled[];
 extern const wchar_t kSSL2Enabled[];
 extern const wchar_t kSSL3Enabled[];
@@ -98,7 +98,7 @@ extern const wchar_t kPrintingPageHeaderRight[];
 extern const wchar_t kPrintingPageFooterLeft[];
 extern const wchar_t kPrintingPageFooterCenter[];
 extern const wchar_t kPrintingPageFooterRight[];
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 extern const wchar_t kUsesSystemTheme[];
 #endif
 extern const wchar_t kCurrentThemePackFilename[];

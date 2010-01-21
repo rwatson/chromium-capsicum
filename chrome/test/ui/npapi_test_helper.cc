@@ -19,7 +19,7 @@
 #elif defined(OS_MACOSX)
 #define TEST_PLUGIN_NAME "npapi_test_plugin.plugin"
 #define LAYOUT_PLUGIN_NAME "TestNetscapePlugIn.plugin"
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 #define TEST_PLUGIN_NAME "libnpapi_test_plugin.so"
 #endif
 

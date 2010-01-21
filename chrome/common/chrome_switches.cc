@@ -694,7 +694,7 @@ const char kProfile[]                       = "profile";
 const char kChromeosFrame[]                 = "chromeos-frame";
 #endif
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 // A temporary switch before we implement the client certificate selection UI.
 // When an SSL server requests client authentication, select a client
 // certificate automatically.

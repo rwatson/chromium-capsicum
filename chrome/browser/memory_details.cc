@@ -17,7 +17,7 @@
 #include "chrome/common/url_constants.h"
 #include "grit/chromium_strings.h"
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 #include "chrome/browser/zygote_host_linux.h"
 #include "chrome/browser/renderer_host/render_sandbox_host_linux.h"
 #endif
@@ -72,7 +72,7 @@ void MemoryDetails::CollectChildInfoOnIOThread() {
 void MemoryDetails::CollectChildInfoOnUIThread() {
   DCHECK(ChromeThread::CurrentlyOn(ChromeThread::UI));
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   const pid_t zygote_pid = Singleton<ZygoteHost>()->pid();
   const pid_t sandbox_helper_pid = Singleton<RenderSandboxHostLinux>()->pid();
 #endif
@@ -149,7 +149,7 @@ void MemoryDetails::CollectChildInfoOnUIThread() {
       }
     }
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     if (process.pid == zygote_pid) {
       process.type = ChildProcessInfo::ZYGOTE_PROCESS;
     } else if (process.pid == sandbox_helper_pid) {

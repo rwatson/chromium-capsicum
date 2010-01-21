@@ -252,7 +252,7 @@ int RendererMain(const MainFunctionParams& parameters) {
   }
 
   {
-#if !defined(OS_LINUX)
+#if !defined(OS_NIX)
     // TODO(markus): Check if it is OK to unconditionally move this
     // instruction down.
     RenderProcess render_process;
@@ -262,7 +262,7 @@ int RendererMain(const MainFunctionParams& parameters) {
     if (!no_sandbox) {
       run_loop = platform.EnableSandbox();
     }
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
     RenderProcess render_process;
     render_process.set_main_thread(new RenderThread());
 #endif

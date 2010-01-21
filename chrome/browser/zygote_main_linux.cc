@@ -2,11 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "build/build_config.h"
+
 #include <dlfcn.h>
 #include <fcntl.h>
+#if defined(OS_FREEBSD)
+#include <signal.h>
+#else
 #include <sys/epoll.h>
 #include <sys/prctl.h>
 #include <sys/signal.h>
+#endif
 #include <sys/socket.h>
 #include <sys/stat.h>
 #include <sys/types.h>
@@ -201,7 +207,11 @@ class Zygote {
     int argc, numfds;
     base::GlobalDescriptors::Mapping mapping;
     base::ProcessId child;
+#if defined(OS_FREEBSD)
+    uint32_t dummy_inode = 0;
+#elif
     uint64_t dummy_inode = 0;
+#endif
     int dummy_fd = -1;
 
     if (!pickle.ReadInt(&iter, &argc))
@@ -244,10 +254,13 @@ class Zygote {
 #if defined(ARCH_CPU_X86_FAMILY)
       // Try to open /proc/self/maps as the seccomp sandbox needs access to it
       if (g_proc_fd >= 0) {
+#if defined(OS_LINUX)
+// BSD: Removing all Seccomp Sandbox code if not on linux
         int proc_self_maps = openat(g_proc_fd, "self/maps", O_RDONLY);
         if (proc_self_maps >= 0) {
           SeccompSandboxSetProcSelfMaps(proc_self_maps);
         }
+#endif
         close(g_proc_fd);
         g_proc_fd = -1;
       }
@@ -536,6 +549,8 @@ static bool EnterSandbox() {
 
     SkiaFontConfigUseIPCImplementation(kMagicSandboxIPCDescriptor);
 
+    // TODO(benl): Do something for FreeBSD...
+#if !defined(OS_FREEBSD)
     // Previously, we required that the binary be non-readable. This causes the
     // kernel to mark the process as non-dumpable at startup. The thinking was
     // that, although we were putting the renderers into a PID namespace (with
@@ -561,6 +576,7 @@ static bool EnterSandbox() {
         return false;
       }
     }
+#endif
   } else {
     SkiaFontConfigUseDirectImplementation();
   }
@@ -602,7 +618,8 @@ bool ZygoteMain(const MainFunctionParams& params) {
   g_am_zygote_or_renderer = true;
 #endif
 
-#if defined(ARCH_CPU_X86_FAMILY)
+// BSD: Removing all Seccomp Sandbox code if not on linux
+#if defined(ARCH_CPU_X86_FAMILY) && defined(OS_LINUX)
   // The seccomp sandbox needs access to files in /proc, which might be denied
   // after one of the other sandboxes have been started. So, obtain a suitable
   // file handle in advance.
@@ -623,7 +640,7 @@ bool ZygoteMain(const MainFunctionParams& params) {
     return false;
   }
 
-#if defined(ARCH_CPU_X86_FAMILY)
+#if defined(ARCH_CPU_X86_FAMILY) && defined(OS_LINUX)
   // The seccomp sandbox will be turned on when the renderers start. But we can
   // already check if sufficient support is available so that we only need to
   // print one error message for the entire browser session.

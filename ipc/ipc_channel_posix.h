@@ -83,7 +83,7 @@ class Channel::ChannelImpl : public MessageLoopForIO::Watcher {
   // pipe_ that is passed to the client.
   int client_pipe_;
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // Linux uses a dedicated socketpair() for passing file descriptors.
   int fd_pipe_;
   int remote_fd_pipe_;

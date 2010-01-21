@@ -774,7 +774,7 @@ bool CaptureVisibleTabFunction::RunImpl() {
   temp_canvas.endPlatformPaint();
 
   screen_capture = temp_canvas.getTopPlatformDevice().accessBitmap(false);
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
   screen_capture = backing_store->PaintRectToBitmap(
       gfx::Rect(0, 0, backing_store->size().width(),
                 backing_store->size().height()));

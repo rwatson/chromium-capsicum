@@ -22,7 +22,7 @@ const bool kShowExitMenuItem = false;
 const bool kShowAboutMenuItem = true;
 const bool kOSSupportsOtherBrowsers = false;
 const bool kDownloadPageHasShowInFolder = false;
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
 
 // 13.4px = 10pt @ 96dpi.
 const double kAutocompleteEditFontPixelSize = 13.4;

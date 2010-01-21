@@ -566,7 +566,7 @@
             ['exclude', '_mac\\.(cc|cpp|mm?)$'],
             ['exclude', '/mac/'] ],
         }],
-        [ 'OS != "linux"', {
+        [ 'OS != "linux" and OS != "freebsd"', {
           'sources/': [ ['exclude', '_(linux|gtk)\\.(cc|cpp)$'] ],
           'sources!': [
             '../third_party/skia/src/ports/SkFontHost_FreeType.cpp',
@@ -695,7 +695,7 @@
         '../third_party/skia/src/core',
       ],
       'conditions': [
-        [ 'OS == "linux" and target_arch != "arm"', {
+        [ '(OS == "linux" or OS == "freebsd") and target_arch != "arm"', {
           'cflags': [
             '-msse2',
           ],

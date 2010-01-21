@@ -5,10 +5,10 @@
 {
   'variables': {
     'conditions': [
-      [ 'OS=="linux"', {
+      [ 'OS=="linux" or OS=="freebsd"', {
         # Link to system .so since we already use it due to GTK.
         'use_system_libpng%': 1,
-      }, {  # OS!="linux"
+      }, {  # OS!="linux" and OS!="freebsd"
         'use_system_libpng%': 0,
       }],
     ],

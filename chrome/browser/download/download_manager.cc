@@ -53,7 +53,7 @@
 #include "base/win_util.h"
 #endif
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <gtk/gtk.h>
 #endif
 

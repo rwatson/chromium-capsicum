@@ -6,7 +6,7 @@
 
 #include "build/build_config.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include <gtk/gtk.h>
 #endif
 
@@ -37,7 +37,7 @@ PluginThread::PluginThread()
           switches::kPluginPath);
 
   lazy_tls.Pointer()->Set(this);
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   {
     // XEmbed plugins assume they are hosted in a Gtk application, so we need
     // to initialize Gtk in the plugin process.
@@ -197,7 +197,7 @@ bool GetPluginFinderURL(std::string* plugin_finder_url) {
 bool IsDefaultPluginEnabled() {
 #if defined(OS_WIN)
   return true;
-#elif defined(OS_LINUX)
+#elif defined(OS_NIX)
   // http://code.google.com/p/chromium/issues/detail?id=10952
   return false;
 #elif defined(OS_MACOSX)

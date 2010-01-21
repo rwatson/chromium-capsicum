@@ -32,7 +32,7 @@ struct NativeWebKeyboardEvent : public WebKit::WebKeyboardEvent {
   NativeWebKeyboardEvent(wchar_t character,
                          int state,
                          double time_stamp_seconds);
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   explicit NativeWebKeyboardEvent(const GdkEventKey* event);
   NativeWebKeyboardEvent(wchar_t character,
                          int state,
@@ -54,7 +54,7 @@ struct NativeWebKeyboardEvent : public WebKit::WebKeyboardEvent {
   // active and is necessary to prevent backspace from doing "history back" if
   // it is hit in ime mode.
   bool skip_in_browser;
-#elif defined(OS_LINUX)
+#elif defined(TOOLKIT_GTK)
   GdkEventKey* os_event;
 #endif
 };

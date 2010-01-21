@@ -465,7 +465,7 @@ void InterstitialPage::DontProceed() {
 }
 
 void InterstitialPage::SetSize(const gfx::Size& size) {
-#if defined(OS_WIN) || defined(OS_LINUX)
+#if defined(OS_WIN) || defined(OS_NIX)
   // When a tab is closed, we might be resized after our view was NULLed
   // (typically if there was an info-bar).
   if (render_view_host_->view())

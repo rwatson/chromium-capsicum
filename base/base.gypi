@@ -400,6 +400,7 @@
         },],
         [ 'OS == "freebsd"', {
             'sources!': [
+              'process_linux.cc',
               'directory_watcher_inotify.cc',
             ],
             'sources': [

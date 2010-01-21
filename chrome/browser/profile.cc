@@ -62,7 +62,7 @@
 #include "net/base/transport_security_state.h"
 #include "webkit/database/database_tracker.h"
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "chrome/browser/gtk/gtk_theme_provider.h"
 #endif
 
@@ -147,7 +147,7 @@ void Profile::RegisterUserPrefs(PrefService* prefs) {
       IDS_SPELLCHECK_DICTIONARY);
   prefs->RegisterBooleanPref(prefs::kEnableSpellCheck, true);
   prefs->RegisterBooleanPref(prefs::kEnableAutoSpellCorrect, true);
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   prefs->RegisterBooleanPref(prefs::kUsesSystemTheme, false);
 #endif
   prefs->RegisterFilePathPref(prefs::kCurrentThemePackFilename, FilePath());
@@ -1052,7 +1052,7 @@ void ProfileImpl::CreatePasswordStore() {
   DCHECK(!created_password_store_ && password_store_.get() == NULL);
   created_password_store_ = true;
   scoped_refptr<PasswordStore> ps;
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
   // TODO(evanm): implement "native" password management.
   // This bug describes the issues.
   // http://code.google.com/p/chromium/issues/detail?id=12351
@@ -1108,7 +1108,7 @@ PersonalDataManager* ProfileImpl::GetPersonalDataManager() {
 
 void ProfileImpl::InitThemes() {
   if (!created_theme_provider_) {
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
     theme_provider_.reset(new GtkThemeProvider);
 #else
     theme_provider_.reset(new BrowserThemeProvider);

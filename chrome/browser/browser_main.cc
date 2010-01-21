@@ -79,7 +79,7 @@
 #include "chrome/app/breakpad_linux.h"
 #endif
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
 #include "chrome/common/gtk_util.h"
 #endif
 
@@ -157,7 +157,7 @@ void RunUIMessageLoop(BrowserProcess* browser_process) {
 #if defined(TOOLKIT_VIEWS)
   views::AcceleratorHandler accelerator_handler;
   MessageLoopForUI::current()->Run(&accelerator_handler);
-#elif defined(OS_LINUX)
+#elif defined(USE_X11)
   MessageLoopForUI::current()->Run(NULL);
 #elif defined(OS_POSIX)
   MessageLoopForUI::current()->Run();
@@ -509,7 +509,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
   }
 #endif  // OS_CHROMEOS
 
-#if defined(OS_LINUX)
+#if defined(TOOLKIT_GTK)
   gtk_util::SetDefaultWindowIcon();
 #endif
 
@@ -700,7 +700,7 @@ int BrowserMain(const MainFunctionParams& parameters) {
       break;
 
     case ProcessSingleton::PROCESS_NOTIFIED:
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
       printf("%s\n", base::SysWideToNativeMB(
                  l10n_util::GetString(IDS_USED_EXISTING_BROWSER)).c_str());
 #endif

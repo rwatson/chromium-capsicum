@@ -16,7 +16,7 @@ hostent* SafeGetHostByName(const char* hostname, hostent* host,
   if (!result) {
     *herrno = WSAGetLastError();
   }
-#elif OS_LINUX
+#elif OS_NIX
   gethostbyname_r(hostname, host, buffer, buffer_len, &result, herrno);
 #elif OS_MACOSX
   result = getipnodebyname(hostname, AF_INET, AI_DEFAULT, herrno);
@@ -31,7 +31,7 @@ hostent* SafeGetHostByName(const char* hostname, hostent* host,
 void FreeHostEnt(hostent* host) {
 #if WIN32
   // No need to free anything, struct returned is static memory.
-#elif OS_LINUX
+#elif OS_NIX
   // No need to free anything, we pass in a pointer to a struct.
 #elif OS_MACOSX
   freehostent(host);

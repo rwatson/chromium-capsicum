@@ -203,7 +203,7 @@ extern const char kProfile[];
 extern const char kChromeosFrame[];
 #endif
 
-#if defined(OS_LINUX)
+#if defined(OS_NIX)
 extern const char kAutoSSLClientAuth[];
 #endif
 
