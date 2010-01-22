@@ -511,6 +511,10 @@ static void PreSandboxInit() {
 static bool EnterSandbox() {
   // Although we don't start the Capsicum sandbox until we're running in the 
   // renderer process, configure fontconfig access for Skia now.
+  //
+  // In the future, we'd like to call cap_enter() here rather than in the
+  // renderer, but that requires first converting the zygote to use process
+  // descriptors so that access to the global PID namespace is not reqired.
   PreSandboxInit();
   SkiaFontConfigUseIPCImplementation(kMagicSandboxIPCDescriptor);
   return true;
