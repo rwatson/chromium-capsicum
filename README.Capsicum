@@ -1,0 +1,28 @@
+Chromium-Capsicum README
+
+TODO:
+
+- Teach process management code about process descriptors...
+- ...allowing the Zygote to run cap_enable() out of EnterSandbox() rather
+  than the renderer out of EnableSandbox().
+- Fix closing of file descriptors when going from zygote to renderer in order
+  to avoid leaking undesired rights into sandboxes.
+- Encapsulate desired file descriptors for renderers in constrained
+  capabilities.
+- Consider switching back to SOCK_DGRAM from SOCK_SEQPACKET, as it appears
+  only to be required because of limitations of the sandboxing models
+  available on Linux.
+- Consider re-enabling X11 SHM and adding explicit copying from the POSIX
+  SHM segments.
+
+Longer-term considerations:
+
+- Use libcapability to launch sandboxes.
+- Delegate font directory capabilities to fontconfig rather than using a
+  proxy service.
+- Extend X11 to support POSIX shared memory so that a single segment can be
+  shared between {X11, browser, renderer} as is done with X11 SHM today when
+  unsandboxed.
+- Explore additional process sandboxing present in the Mac / Windows models
+  but not supported on Linux.
+
