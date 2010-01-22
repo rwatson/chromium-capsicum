@@ -28,8 +28,6 @@ bool RendererMainPlatformDelegate::InitSandboxTests(bool no_sandbox) {
 }
 
 bool RendererMainPlatformDelegate::EnableSandbox() {
-  base::RandUint64(); // Initialize random number generate before sandbox
-  cap_new(-1, 0);
   if (cap_enter() < 0)
     return false;
   return true;

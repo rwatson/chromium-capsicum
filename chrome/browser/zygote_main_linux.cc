@@ -507,7 +507,15 @@ static void PreSandboxInit() {
       media::InitializeMediaLibrary(module_path);
 }
 
-#if !defined(CHROMIUM_SELINUX)
+#if defined(CHROMIUM_CAPSICUM)
+static bool EnterSandbox() {
+  // Although we don't start the Capsicum sandbox until we're running in the 
+  // renderer process, configure fontconfig access for Skia now.
+  PreSandboxInit();
+  SkiaFontConfigUseIPCImplementation(kMagicSandboxIPCDescriptor);
+  return true;
+}
+#elif !defined(CHROMIUM_SELINUX)
 static bool EnterSandbox() {
   const char* const sandbox_fd_string = getenv("SBX_D");
   if (sandbox_fd_string) {
