@@ -1,4 +1,21 @@
 Chromium-Capsicum README
+------------------------
+
+Chromium-Capsicum is an adapation of Google's Chromium web browser to use
+FreeBSD's Capsicum capability security primitives.  This allows renderers
+(and in the future, other components) to execute in tightly-controlled
+sandboxes without the need for complex access control manipulations required
+when using traditional OS APIs.  This should lead to more complete and more
+robust protection with significantly lower code complexity.
+
+Capsicum is a research project at the University of Cambridge Computer
+Laboratory, and sponsored by Google, Inc.  Learn more at:
+
+  http://www.cl.cam.ac.uk/research/security/capsicum/
+
+WARNING:
+
+  This is a research prototype, and should be used with caution.
 
 TODO:
 
