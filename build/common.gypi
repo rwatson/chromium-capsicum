@@ -180,6 +180,9 @@
     # Set this to true to enable SELinux support.
     'selinux%': 0,
 
+    # Set this to true to enable Capsicum support.
+    'capsicum%': 1,
+
     # Strip the binary after dumping symbols.
     'linux_strip_binary%': 0,
 
@@ -338,6 +341,9 @@
       }],  # fastbuild!=0
       ['selinux==1', {
         'defines': ['CHROMIUM_SELINUX=1'],
+      }],
+      ['capsicum==1', {
+        'defines': ['CHROMIUM_CAPSICUM=1'],
       }],
       ['win_use_allocator_shim==0', {
         'conditions': [
