@@ -23,7 +23,7 @@
 #include "webkit/glue/webplugininfo.h"
 #include "webkit/glue/webplugin_delegate.h"
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 #include "base/hash_tables.h"
 #include "base/linked_ptr.h"
 #endif
@@ -142,7 +142,7 @@ class WebPluginDelegateProxy
                                   intptr_t notify_data);
   void OnDeferResourceLoading(unsigned long resource_id, bool defer);
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   void OnUpdateGeometry_ACK(int ack_key);
 #endif
 
@@ -169,7 +169,7 @@ class WebPluginDelegateProxy
   // point the window has already been destroyed).
   void WillDestroyWindow();
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // The Mac TransportDIB implementation uses base::SharedMemory, which
   // cannot be disposed of if an in-flight UpdateGeometry message refers to
   // the shared memory file descriptor.  The old_transport_dibs_ map holds

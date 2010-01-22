@@ -7,7 +7,7 @@
 
 #include "base/basictypes.h"
 
-#if defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 #include "base/shared_memory.h"
 #endif
 
@@ -73,7 +73,7 @@ class TransportDIB {
   // Returns a default, invalid handle, that is meant to indicate a missing
   // Transport DIB.
   static Handle DefaultHandleValue() { return NULL; }
-#elif defined(OS_MACOSX)
+#elif defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   typedef base::SharedMemoryHandle Handle;
   // On Mac, the inode number of the backing file is used as an id.
   typedef base::SharedMemoryId Id;
@@ -131,7 +131,7 @@ class TransportDIB {
 
  private:
   TransportDIB();
-#if defined(OS_WIN) || defined(OS_MACOSX)
+#if defined(OS_WIN) || defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   explicit TransportDIB(base::SharedMemoryHandle dib);
   base::SharedMemory shared_memory_;
   uint32 sequence_num_;

@@ -442,7 +442,7 @@ void WebPluginProxy::UpdateGeometry(
     const gfx::Rect& clip_rect,
     const TransportDIB::Handle& windowless_buffer,
     const TransportDIB::Handle& background_buffer
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
     ,
     int ack_key
 #endif
@@ -463,7 +463,7 @@ void WebPluginProxy::UpdateGeometry(
     InvalidateRect(damaged_rect_);
   }
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // The renderer is expecting an ACK message if ack_key is not -1.
   if (ack_key != -1) {
     Send(new PluginHostMsg_UpdateGeometry_ACK(route_id_, ack_key));
@@ -543,6 +543,8 @@ void WebPluginProxy::SetWindowlessBuffer(
 }
 
 #elif defined(OS_NIX)
+
+/* XXXRW: Is special handling for Capsicum required here? */
 
 void WebPluginProxy::SetWindowlessBuffer(
     const TransportDIB::Handle& windowless_buffer,

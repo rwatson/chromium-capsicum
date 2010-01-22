@@ -41,7 +41,7 @@ class RenderProcessTest : public testing::Test {
 
 TEST_F(RenderProcessTest, TestTransportDIBAllocation) {
   // On Mac, we allocate in the browser so this test is invalid.
-#if !defined(OS_MACOSX)
+#if !defined(OS_MACOSX) && !defined(CHROMIUM_CAPSICUM)
   const gfx::Rect rect(0, 0, 100, 100);
   TransportDIB* dib;
   skia::PlatformCanvas* canvas =

@@ -107,7 +107,7 @@ class RenderWidgetHelper
                         const base::TimeDelta& max_delay,
                         IPC::Message* msg);
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // Given the id of a transport DIB, return a mapping to it or NULL on error.
   TransportDIB* MapTransportDIB(TransportDIB::Id dib_id);
 #endif
@@ -124,7 +124,7 @@ class RenderWidgetHelper
                        int* route_id);
   void CreateNewWidget(int opener_id, bool activatable, int* route_id);
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // Called on the IO thread to handle the allocation of a transport DIB
   void AllocTransportDIB(size_t size, TransportDIB::Handle* result);
 
@@ -166,7 +166,7 @@ class RenderWidgetHelper
   // Called on the IO thread to resume a cross-site response.
   void OnCrossSiteClosePageACK(ViewMsg_ClosePage_Params params);
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // Called on destruction to release all allocated transport DIBs
   void ClearAllocatedDIBs();
 

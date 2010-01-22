@@ -668,7 +668,7 @@ TransportDIB* BrowserRenderProcessHost::MapTransportDIB(
   HANDLE section = win_util::GetSectionFromProcess(
       dib_id.handle, GetHandle(), false /* read write */);
   return TransportDIB::Map(section);
-#elif defined(OS_MACOSX)
+#elif defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // On OSX, the browser allocates all DIBs and keeps a file descriptor around
   // for each.
   return widget_helper_->MapTransportDIB(dib_id);

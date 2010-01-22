@@ -297,7 +297,7 @@ void WebPluginDelegateStub::OnUpdateGeometry(
   webplugin_->UpdateGeometry(
       param.window_rect, param.clip_rect,
       param.windowless_buffer, param.background_buffer
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
       ,
       param.ack_key
 #endif

@@ -388,7 +388,7 @@ bool ResourceMessageFilter::OnMessageReceived(const IPC::Message& msg) {
       IPC_MESSAGE_HANDLER_DELAY_REPLY(ViewHostMsg_ScriptedPrint,
                                       OnScriptedPrint)
 #endif
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
       IPC_MESSAGE_HANDLER(ViewHostMsg_AllocTransportDIB,
                           OnAllocTransportDIB)
       IPC_MESSAGE_HANDLER(ViewHostMsg_FreeTransportDIB,
@@ -1067,7 +1067,7 @@ void ResourceMessageFilter::OnRendererHistograms(
   HistogramSynchronizer::DeserializeHistogramList(sequence_number, histograms);
 }
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 void ResourceMessageFilter::OnAllocTransportDIB(
     size_t size, TransportDIB::Handle* handle) {
   render_widget_helper_->AllocTransportDIB(size, handle);

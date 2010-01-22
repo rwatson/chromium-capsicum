@@ -37,6 +37,7 @@
 
 // Destroys the image and the associated shared memory structures. This is a
 // helper function for code using shared memory.
+#if !defined(CHROMIUM_CAPSICUM)
 static void DestroySharedImage(Display* display,
                                XImage* image,
                                XShmSegmentInfo* shminfo) {
@@ -47,6 +48,7 @@ static void DestroySharedImage(Display* display,
   shmctl(shminfo->shmid, IPC_RMID, 0);
 #endif
 }
+#endif // !defined(CHROMIUM_CAPSICUM)
 
 BackingStore::BackingStore(RenderWidgetHost* widget,
                            const gfx::Size& size,
@@ -55,7 +57,11 @@ BackingStore::BackingStore(RenderWidgetHost* widget,
     : render_widget_host_(widget),
       size_(size),
       display_(x11_util::GetXDisplay()),
+#if defined(CHROMIUM_CAPSICUM)
+      shared_memory_support_(x11_util::SHARED_MEMORY_NONE),
+#else
       shared_memory_support_(x11_util::QuerySharedMemorySupport(display_)),
+#endif
       use_render_(x11_util::QueryRenderSupport(display_)),
       visual_(visual),
       visual_depth_(depth),
@@ -248,6 +254,7 @@ void BackingStore::PaintRect(base::ProcessHandle process,
   Picture picture;
   Pixmap pixmap;
 
+#if !defined(CHROMIUM_CAPSICUM)
   if (shared_memory_support_ == x11_util::SHARED_MEMORY_PIXMAP) {
     XShmSegmentInfo shminfo = {0};
     shminfo.shmseg = bitmap->MapToX(display_);
@@ -262,11 +269,13 @@ void BackingStore::PaintRect(base::ProcessHandle process,
     pixmap = XShmCreatePixmap(display_, root_window_, NULL, &shminfo,
                               width, height, 32);
   } else {
+#endif // !defined(CHROMIUM_CAPSICUM)
     // We don't have shared memory pixmaps.  Fall back to creating a pixmap
     // ourselves and putting an image on it.
     pixmap = XCreatePixmap(display_, root_window_, width, height, 32);
     GC gc = XCreateGC(display_, pixmap, 0, NULL);
 
+#if !defined(CHROMIUM_CAPSICUM)
     if (shared_memory_support_ == x11_util::SHARED_MEMORY_PUTIMAGE) {
       const XID shmseg = bitmap->MapToX(display_);
 
@@ -285,6 +294,7 @@ void BackingStore::PaintRect(base::ProcessHandle process,
                    width, height, False /* send_event */);
       XDestroyImage(image);
     } else { // case SHARED_MEMORY_NONE
+#endif // !defined(CHROMIUM_CAPSICUM)
       // No shared memory support, we have to copy the bitmap contents
       // to the X server. Xlib wraps the underlying PutImage call
       // behind several layers of functions which try to convert the
@@ -310,9 +320,13 @@ void BackingStore::PaintRect(base::ProcessHandle process,
       XPutImage(display_, pixmap, gc, &image,
                 0, 0 /* source x, y */, 0, 0 /* dest x, y */,
                 width, height);
+#if !defined(CHROMIUM_CAPSICUM)
     }
+#endif
     XFreeGC(display_, gc);
+#if !defined(CHROMIUM_CAPSICUM)
   }
+#endif
 
   picture = x11_util::CreatePictureFromSkiaPixmap(display_, pixmap);
   XRenderComposite(display_,
@@ -329,11 +343,13 @@ void BackingStore::PaintRect(base::ProcessHandle process,
                    copy_rect.width(),                // width
                    copy_rect.height());              // height
 
+#if !defined(CHROMIUM_CAPSICUM)
   // In the case of shared memory, we wait for the composite to complete so that
   // we are sure that the X server has finished reading from the shared memory
   // segment.
   if (shared_memory_support_ != x11_util::SHARED_MEMORY_NONE)
     XSync(display_, False);
+#endif
 
   XRenderFreePicture(display_, picture);
   XFreePixmap(display_, pixmap);
@@ -410,6 +426,7 @@ SkBitmap BackingStore::PaintRectToBitmap(const gfx::Rect& rect) {
   const int height = std::min(size_.height(), rect.height());
 
   XImage* image;
+#if !defined(CHROMIUM_CAPSICUM)
   XShmSegmentInfo shminfo;  // Used only when shared memory is enabled.
   if (shared_memory_support_ != x11_util::SHARED_MEMORY_NONE) {
     // Use shared memory for faster copies when it's available.
@@ -443,18 +460,23 @@ SkBitmap BackingStore::PaintRectToBitmap(const gfx::Rect& rect) {
       return SkBitmap();
     }
   } else {
+#endif // !defined(CHROMIUM_CAPSICUM)
     // Non-shared memory case just copy the image from the server.
     image = XGetImage(display_, pixmap_,
                       rect.x(), rect.y(), width, height,
                       AllPlanes, ZPixmap);
+#if !defined(CHROMIUM_CAPSICUM)
   }
+#endif
 
   // TODO(jhawkins): Need to convert the image data if the image bits per pixel
   // is not 32.
   if (image->bits_per_pixel != 32) {
+#if !defined(CHROMIUM_CAPSICUM)
     if (shared_memory_support_ != x11_util::SHARED_MEMORY_NONE)
       DestroySharedImage(display_, image, &shminfo);
     else
+#endif
       XDestroyImage(image);
     return SkBitmap();
   }
@@ -469,9 +491,11 @@ SkBitmap BackingStore::PaintRectToBitmap(const gfx::Rect& rect) {
       reinterpret_cast<unsigned char*>(bitmap.getAddr32(0, 0));
   memcpy(bitmap_data, image->data, image->bytes_per_line * height);
 
+#if !defined(CHROMIUM_CAPSICUM)
   if (shared_memory_support_ != x11_util::SHARED_MEMORY_NONE)
     DestroySharedImage(display_, image, &shminfo);
   else
+#endif
     XDestroyImage(image);
 
   HISTOGRAM_TIMES("BackingStore.RetrievalFromX",

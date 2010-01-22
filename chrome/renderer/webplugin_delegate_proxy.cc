@@ -388,7 +388,7 @@ void WebPluginDelegateProxy::OnMessageReceived(const IPC::Message& msg) {
     IPC_MESSAGE_HANDLER(PluginHostMsg_DeferResourceLoading,
                         OnDeferResourceLoading)
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
     IPC_MESSAGE_HANDLER(PluginHostMsg_UpdateGeometry_ACK,
                         OnUpdateGeometry_ACK)
 #endif
@@ -426,7 +426,7 @@ void WebPluginDelegateProxy::UpdateGeometry(const gfx::Rect& window_rect,
   bool bitmaps_changed = false;
 
   PluginMsg_UpdateGeometry_Param param;
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   param.ack_key = -1;
 #endif
 
@@ -437,7 +437,7 @@ void WebPluginDelegateProxy::UpdateGeometry(const gfx::Rect& window_rect,
         {
       bitmaps_changed = true;
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
       if (backing_store_.get()) {
         // ResetWindowlessBitmaps inserts the old TransportDIBs into
         // old_transport_dibs_ using the backing store's file descriptor as
@@ -502,7 +502,7 @@ void WebPluginDelegateProxy::UpdateGeometry(const gfx::Rect& window_rect,
   Send(msg);
 }
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 static void ReleaseTransportDIB(TransportDIB *dib) {
   if (dib) {
     IPC::Message* msg = new ViewHostMsg_FreeTransportDIB(dib->id());
@@ -512,7 +512,7 @@ static void ReleaseTransportDIB(TransportDIB *dib) {
 #endif
 
 void WebPluginDelegateProxy::ResetWindowlessBitmaps() {
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   if (backing_store_.get()) {
     int ack_key = backing_store_->handle().fd;
 
@@ -555,12 +555,11 @@ bool WebPluginDelegateProxy::CreateBitmap(
   int height = plugin_rect_.height();
   const size_t stride = skia::PlatformCanvas::StrideForWidth(width);
   const size_t size = stride * height;
-#if defined(OS_NIX)
+#if defined(OS_NIX) && !defined(CHROMIUM_CAPSICUM)
   memory->reset(TransportDIB::Create(size, 0));
   if (!memory->get())
     return false;
-#endif
-#if defined(OS_MACOSX)
+#elif defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   TransportDIB::Handle handle;
   IPC::Message* msg = new ViewHostMsg_AllocTransportDIB(size, &handle);
   if (!RenderThread::current()->Send(msg))
@@ -1183,7 +1182,7 @@ void WebPluginDelegateProxy::OnDeferResourceLoading(unsigned long resource_id,
   plugin_->SetDeferResourceLoading(resource_id, defer);
 }
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 void WebPluginDelegateProxy::OnUpdateGeometry_ACK(int ack_key) {
   DCHECK_NE(ack_key, -1);
 

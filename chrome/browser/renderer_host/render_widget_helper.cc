@@ -58,7 +58,7 @@ RenderWidgetHelper::~RenderWidgetHelper() {
   // object, so we should not be destroyed unless pending_paints_ is empty!
   DCHECK(pending_paints_.empty());
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   ClearAllocatedDIBs();
 #endif
 }
@@ -249,7 +249,7 @@ void RenderWidgetHelper::OnCreateWidgetOnUI(
     host->CreateNewWidget(route_id, activatable);
 }
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 TransportDIB* RenderWidgetHelper::MapTransportDIB(TransportDIB::Id dib_id) {
   AutoLock locked(allocated_dibs_lock_);
 

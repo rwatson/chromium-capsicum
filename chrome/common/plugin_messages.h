@@ -106,7 +106,7 @@ struct PluginMsg_UpdateGeometry_Param {
   TransportDIB::Handle windowless_buffer;
   TransportDIB::Handle background_buffer;
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // This field contains a key that the plug-in process is expected to return
   // to the renderer in its ACK message, unless the value is -1, in which case
   // no ACK message is required.  Other than the special -1 value, the values
@@ -426,7 +426,7 @@ struct ParamTraits<PluginMsg_UpdateGeometry_Param> {
     WriteParam(m, p.clip_rect);
     WriteParam(m, p.windowless_buffer);
     WriteParam(m, p.background_buffer);
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
     WriteParam(m, p.ack_key);
 #endif
   }
@@ -436,7 +436,7 @@ struct ParamTraits<PluginMsg_UpdateGeometry_Param> {
       ReadParam(m, iter, &r->clip_rect) &&
       ReadParam(m, iter, &r->windowless_buffer) &&
       ReadParam(m, iter, &r->background_buffer)
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
       &&
       ReadParam(m, iter, &r->ack_key)
 #endif
@@ -451,7 +451,7 @@ struct ParamTraits<PluginMsg_UpdateGeometry_Param> {
     LogParam(p.windowless_buffer, l);
     l->append(L", ");
     LogParam(p.background_buffer, l);
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
     l->append(L", ");
     LogParam(p.ack_key, l);
 #endif

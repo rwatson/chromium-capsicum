@@ -112,7 +112,7 @@ class WebPluginProxy : public webkit_glue::WebPlugin {
                       const gfx::Rect& clip_rect,
                       const TransportDIB::Handle& windowless_buffer,
                       const TransportDIB::Handle& background_buffer
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
                       ,
                       int ack_key
 #endif

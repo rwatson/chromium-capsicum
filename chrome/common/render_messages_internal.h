@@ -1704,7 +1704,7 @@ IPC_BEGIN_MESSAGES(ViewHost)
   IPC_MESSAGE_CONTROL1(ViewHostMsg_ExtensionRemoveListener,
                        std::string /* name */)
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // On OSX, we cannot allocated shared memory from within the sandbox, so
   // this call exists for the renderer to ask the browser to allocate memory
   // on its behalf. We return a file descriptor to the POSIX shared memory.

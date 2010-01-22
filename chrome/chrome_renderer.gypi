@@ -164,6 +164,14 @@
            }],
           ],
         }],
+        ['OS=="freebsd" and capsicum==1', {
+          'sources!': [
+            'renderer/renderer_main_platform_delegate_linux.cc',
+          ],
+          'sources': [
+            'renderer/renderer_main_platform_delegate_capsicum.cc',
+          ],
+        }],
         # Windows-specific rules.
         ['OS=="win"', {
           'include_dirs': [

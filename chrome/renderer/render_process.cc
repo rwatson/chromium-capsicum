@@ -159,10 +159,10 @@ bool RenderProcess::LaunchNaClProcess(const char* url,
 // Platform specific code for dealing with bitmap transport...
 
 TransportDIB* RenderProcess::CreateTransportDIB(size_t size) {
-#if defined(OS_WIN) || defined(OS_NIX)
+#if defined(OS_WIN) || (defined(OS_NIX) && !defined(CHROMIUM_CAPSICUM))
   // Windows and Linux create transport DIBs inside the renderer
   return TransportDIB::Create(size, sequence_number_++);
-#elif defined(OS_MACOSX)  // defined(OS_WIN) || defined(OS_NIX)
+#elif defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // Mac creates transport DIBs in the browser, so we need to do a sync IPC to
   // get one.
   TransportDIB::Handle handle;
@@ -172,14 +172,14 @@ TransportDIB* RenderProcess::CreateTransportDIB(size_t size) {
   if (handle.fd < 0)
     return NULL;
   return TransportDIB::Map(handle);
-#endif  // defined(OS_MACOSX)
+#endif  // defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
 }
 
 void RenderProcess::FreeTransportDIB(TransportDIB* dib) {
   if (!dib)
     return;
 
-#if defined(OS_MACOSX)
+#if defined(OS_MACOSX) || defined(CHROMIUM_CAPSICUM)
   // On Mac we need to tell the browser that it can drop a reference to the
   // shared memory.
   IPC::Message* msg = new ViewHostMsg_FreeTransportDIB(dib->id());

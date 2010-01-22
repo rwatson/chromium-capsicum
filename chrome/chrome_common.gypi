@@ -303,6 +303,14 @@
             '../build/linux/system.gyp:selinux',
           ],
         }],
+        ['OS=="freebsd" and capsicum==1', {
+          'sources!': [
+            'common/transport_dib_linux.cc',
+          ],
+          'sources': [
+            'common/transport_dib_capsicum.cc',
+          ],
+        }],
         ['OS=="mac"', {
           'sources!': [
             'common/process_watcher_posix.cc',
