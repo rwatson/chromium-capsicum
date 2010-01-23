@@ -31,6 +31,9 @@ TODO:
   available on Linux.
 - Consider re-enabling X11 SHM and adding explicit copying from the POSIX
   SHM segments.
+- Determine whether chrome data packs are actually required in sandboxes,
+  either as file descriptors or as memory mappings, and remove if not; they
+  are currently wrapped in capabilities but perhaps are not needed at all.
 
 Longer-term considerations:
 
