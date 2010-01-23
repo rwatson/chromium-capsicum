@@ -11,6 +11,11 @@
 
 #include <fstream>
 
+#if defined(CHROMIUM_CAPSICUM)
+#include <sys/capability.h>
+#include <libcapability.h>
+#endif
+
 #include "base/file_path.h"
 #include "base/logging.h"
 #include "base/string_piece.h"
@@ -302,6 +307,13 @@ bool MemoryMappedFile::MapFileToMemory(const FilePath& file_name) {
     LOG(ERROR) << "Couldn't open " << file_name.value();
     return false;
   }
+
+#if defined(CHROMIUM_CAPSICUM)
+  if (lc_limitfd(file_, CAP_FSTAT | CAP_READ | CAP_MMAP) < 0) {
+    LOG(ERROR) << "Couldn't restrict capability for " << file_name.value();
+    return false;
+  }
+#endif
 
   return MapFileToMemoryInternal();
 }
