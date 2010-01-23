@@ -4,6 +4,11 @@
 
 #include "base/rand_util.h"
 
+#ifdef CHROMIUM_CAPSICUM
+#include <sys/capability.h>
+#include <libcapability.h>
+#endif
+
 #include <errno.h>
 #include <fcntl.h>
 #include <unistd.h>
@@ -23,6 +28,10 @@ class URandomFd {
   URandomFd() {
     fd_ = open("/dev/urandom", O_RDONLY);
     CHECK(fd_ >= 0) << "Cannot open /dev/urandom: " << errno;
+#ifdef CHROMIUM_CAPSICUM
+    int err = lc_limitfd(fd_, CAP_READ | CAP_FSTAT | CAP_SEEK);
+    CHECK(err == 0) << "lc_limitfd /dev/random" << errno;
+#endif
   }
 
   ~URandomFd() {

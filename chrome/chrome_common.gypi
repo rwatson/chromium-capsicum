@@ -310,6 +310,11 @@
           'sources': [
             'common/transport_dib_capsicum.cc',
           ],
+          'link_settings': {
+            'libraries': [
+              '-lcapability',
+            ],
+          },
         }],
         ['OS=="mac"', {
           'sources!': [
