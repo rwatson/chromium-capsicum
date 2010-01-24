@@ -8,6 +8,7 @@
 #include "base/rand_util.h"
 
 #include <sys/capability.h>
+#include <libcapability.h>
 
 RendererMainPlatformDelegate::RendererMainPlatformDelegate(
     const MainFunctionParams& parameters)
@@ -28,6 +29,20 @@ bool RendererMainPlatformDelegate::InitSandboxTests(bool no_sandbox) {
 }
 
 bool RendererMainPlatformDelegate::EnableSandbox() {
+  int err;
+
+  err = lc_limitfd(STDIN_FILENO, CAP_EVENT | CAP_FSTAT | CAP_READ |
+    CAP_SEEK);
+  if (err)
+    return false;
+  err = lc_limitfd(STDOUT_FILENO, CAP_EVENT | CAP_FSTAT | CAP_SEEK |
+    CAP_WRITE);
+  if (err)
+    return false;
+  err = lc_limitfd(STDERR_FILENO, CAP_EVENT | CAP_FSTAT | CAP_SEEK |
+    CAP_WRITE);
+  if (err)
+    return false;
   if (cap_enter() < 0)
     return false;
   return true;
