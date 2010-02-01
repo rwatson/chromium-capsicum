@@ -8,7 +8,7 @@
 #include "base/rand_util.h"
 
 #include <sys/capability.h>
-#include <libcapability.h>
+#include <libcapsicum.h>
 
 RendererMainPlatformDelegate::RendererMainPlatformDelegate(
     const MainFunctionParams& parameters)

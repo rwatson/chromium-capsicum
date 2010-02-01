@@ -13,7 +13,7 @@
 
 #if defined(CHROMIUM_CAPSICUM)
 #include <sys/capability.h>
-#include <libcapability.h>
+#include <libcapsicum.h>
 #endif
 
 #include "base/file_path.h"

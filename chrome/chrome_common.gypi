@@ -312,7 +312,7 @@
           ],
           'link_settings': {
             'libraries': [
-              '-lcapability',
+              '-lcapsicum',
             ],
           },
         }],

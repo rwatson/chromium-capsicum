@@ -6,7 +6,7 @@
 
 #ifdef CHROMIUM_CAPSICUM
 #include <sys/capability.h>
-#include <libcapability.h>
+#include <libcapsicum.h>
 #endif
 
 #include <errno.h>
